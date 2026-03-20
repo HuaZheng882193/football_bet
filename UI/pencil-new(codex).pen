@@ -1,0 +1,1574 @@
+{
+  "version": "2.9",
+  "children": [
+    {
+      "type": "frame",
+      "id": "bi8Au",
+      "x": 0,
+      "y": 0,
+      "name": "Football Odds Finder",
+      "width": 1440,
+      "height": 1024,
+      "fill": "$--background",
+      "children": [
+        {
+          "type": "frame",
+          "id": "9hNfc",
+          "name": "Sidebar",
+          "width": 248,
+          "height": "fill_container",
+          "fill": "$--surface-alt",
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "right": 1
+            },
+            "fill": "$--border"
+          },
+          "layout": "vertical",
+          "gap": 24,
+          "padding": [
+            24,
+            20
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "dHCMt",
+              "name": "brand",
+              "width": "fill_container",
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "e013f",
+                  "name": "brandLeft",
+                  "gap": 12,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "lmLuy",
+                      "name": "brandMark",
+                      "width": 40,
+                      "height": 40,
+                      "fill": "$--primary",
+                      "cornerRadius": 12
+                    },
+                    {
+                      "type": "frame",
+                      "id": "z3Vu3",
+                      "name": "brandText",
+                      "layout": "vertical",
+                      "gap": 2,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "3wHxu",
+                          "name": "brandName",
+                          "fill": "$--foreground",
+                          "content": "OddsDeck",
+                          "fontFamily": "$--font-primary",
+                          "fontSize": 18,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "R9dj9",
+                          "name": "brandSub",
+                          "fill": "$--muted-foreground",
+                          "content": "football pricing",
+                          "fontFamily": "$--font-secondary",
+                          "fontSize": 12,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "lHxrd",
+              "name": "nav",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "knTFt",
+                  "name": "nav1",
+                  "width": "fill_container",
+                  "fill": "$--primary-soft",
+                  "cornerRadius": 12,
+                  "gap": 12,
+                  "padding": [
+                    12,
+                    14
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "J9316",
+                      "name": "nav1Icon",
+                      "width": 18,
+                      "height": 18,
+                      "iconFontName": "layout-dashboard",
+                      "iconFontFamily": "lucide",
+                      "fill": "$--primary"
+                    },
+                    {
+                      "type": "text",
+                      "id": "odCEu",
+                      "name": "nav1Text",
+                      "fill": "$--primary",
+                      "content": "当日赔率总览",
+                      "fontFamily": "$--font-primary",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "ciD9B",
+                  "name": "nav2",
+                  "width": "fill_container",
+                  "cornerRadius": 12,
+                  "gap": 12,
+                  "padding": [
+                    12,
+                    14
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "DjCO7",
+                      "name": "nav2Icon",
+                      "width": 18,
+                      "height": 18,
+                      "iconFontName": "scale",
+                      "iconFontFamily": "lucide",
+                      "fill": "$--muted-foreground"
+                    },
+                    {
+                      "type": "text",
+                      "id": "y2kMn",
+                      "name": "nav2Text",
+                      "fill": "$--foreground",
+                      "content": "博彩公司对比",
+                      "fontFamily": "$--font-primary",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "LZ946",
+                  "name": "nav3",
+                  "width": "fill_container",
+                  "cornerRadius": 12,
+                  "gap": 12,
+                  "padding": [
+                    12,
+                    14
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "R9Ylc",
+                      "name": "nav3Icon",
+                      "width": 18,
+                      "height": 18,
+                      "iconFontName": "history",
+                      "iconFontFamily": "lucide",
+                      "fill": "$--muted-foreground"
+                    },
+                    {
+                      "type": "text",
+                      "id": "2Rc5h",
+                      "name": "nav3Text",
+                      "fill": "$--foreground",
+                      "content": "历史赔率",
+                      "fontFamily": "$--font-primary",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "BMGTE",
+                  "name": "nav4",
+                  "width": "fill_container",
+                  "cornerRadius": 12,
+                  "gap": 12,
+                  "padding": [
+                    12,
+                    14
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "1g3wG",
+                      "name": "nav4Icon",
+                      "width": 18,
+                      "height": 18,
+                      "iconFontName": "download",
+                      "iconFontFamily": "lucide",
+                      "fill": "$--muted-foreground"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Y04s4",
+                      "name": "nav4Text",
+                      "fill": "$--foreground",
+                      "content": "CSV 导出",
+                      "fontFamily": "$--font-primary",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "4Y1l5",
+          "name": "Main Content",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "$--background",
+          "layout": "vertical",
+          "gap": 24,
+          "padding": [
+            28,
+            32,
+            32,
+            32
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "El4fn",
+              "name": "header",
+              "width": "fill_container",
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "TTEMN",
+                  "name": "titleBlock",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "FMSk1",
+                      "name": "eyebrow",
+                      "fill": "$--muted-foreground",
+                      "content": "ODDS EXPLORER",
+                      "fontFamily": "$--font-primary",
+                      "fontSize": 12,
+                      "fontWeight": "600",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "TLWr5",
+                      "name": "pageTitle",
+                      "fill": "$--foreground",
+                      "content": "足球赔率查询",
+                      "fontFamily": "$--font-primary",
+                      "fontSize": 32,
+                      "fontWeight": "600",
+                      "letterSpacing": -0.5
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "QnR6R",
+                  "name": "headerTools",
+                  "gap": 12,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "CkPiN",
+                      "name": "liveBadge",
+                      "fill": "$--primary-soft",
+                      "cornerRadius": 999,
+                      "gap": 8,
+                      "padding": [
+                        8,
+                        12
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "ellipse",
+                          "id": "jFgrH",
+                          "name": "liveDot",
+                          "fill": "$--success",
+                          "width": 8,
+                          "height": 8
+                        },
+                        {
+                          "type": "text",
+                          "id": "3cmKs",
+                          "name": "liveText",
+                          "fill": "$--primary",
+                          "content": "Live odds sync",
+                          "fontFamily": "$--font-primary",
+                          "fontSize": 13,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "X9vUS",
+                      "name": "exportBtn",
+                      "fill": "$--primary",
+                      "cornerRadius": 12,
+                      "gap": 8,
+                      "padding": [
+                        10,
+                        14
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon_font",
+                          "id": "Wi6yB",
+                          "name": "exportIcon",
+                          "width": 16,
+                          "height": 16,
+                          "iconFontName": "file-down",
+                          "iconFontFamily": "lucide",
+                          "fill": "#FFFFFF"
+                        },
+                        {
+                          "type": "text",
+                          "id": "ppDZ7",
+                          "name": "exportLabel",
+                          "fill": "#FFFFFF",
+                          "content": "导出 CSV",
+                          "fontFamily": "$--font-primary",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "7nlaf",
+              "name": "Query Card",
+              "width": "fill_container",
+              "fill": "#FFFFFF",
+              "cornerRadius": 16,
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "$--border"
+              },
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 20,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "Jx4O0",
+                  "name": "queryTop",
+                  "width": "fill_container",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "U8mjV",
+                      "name": "queryTitleWrap",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "8C2Ij",
+                          "name": "queryTitle",
+                          "fill": "$--foreground",
+                          "content": "查询当日联赛赔率",
+                          "fontFamily": "Inter",
+                          "fontSize": 20,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "XT8ba",
+                          "name": "queryDesc",
+                          "fill": "$--muted-foreground",
+                          "textGrowth": "fixed-width",
+                          "width": 560,
+                          "content": "选择联赛与日期，支持按球队名搜索，并对比多家博彩公司主胜 / 平 / 客胜。",
+                          "lineHeight": 1.5,
+                          "fontFamily": "Inter",
+                          "fontSize": 13
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "7Roh8",
+                  "name": "controls",
+                  "width": "fill_container",
+                  "gap": 12,
+                  "alignItems": "end",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "5zQ5Z",
+                      "name": "leagueField",
+                      "width": 190,
+                      "fill": "$--surface-alt",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$--border"
+                      },
+                      "layout": "vertical",
+                      "gap": 6,
+                      "padding": [
+                        10,
+                        12
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "fKg2L",
+                          "name": "leagueLabel",
+                          "fill": "$--muted-foreground",
+                          "content": "联赛",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "600",
+                          "letterSpacing": 1
+                        },
+                        {
+                          "type": "text",
+                          "id": "8G5Od",
+                          "name": "leagueValue",
+                          "fill": "$--foreground",
+                          "content": "英超 Premier League",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "EpE4f",
+                      "name": "dateField",
+                      "width": 152,
+                      "fill": "$--surface-alt",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$--border"
+                      },
+                      "layout": "vertical",
+                      "gap": 6,
+                      "padding": [
+                        10,
+                        12
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "UyLhY",
+                          "name": "dateLabel",
+                          "fill": "$--muted-foreground",
+                          "content": "日期",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "600",
+                          "letterSpacing": 1
+                        },
+                        {
+                          "type": "text",
+                          "id": "05BD4",
+                          "name": "dateValue",
+                          "fill": "$--foreground",
+                          "content": "2026-03-19",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "vHiUb",
+                      "name": "teamField",
+                      "width": "fill_container",
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$--border"
+                      },
+                      "gap": 10,
+                      "padding": [
+                        12,
+                        14
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon_font",
+                          "id": "GiovZ",
+                          "name": "teamIcon",
+                          "width": 16,
+                          "height": 16,
+                          "iconFontName": "search",
+                          "iconFontFamily": "lucide",
+                          "fill": "$--muted-foreground"
+                        },
+                        {
+                          "type": "text",
+                          "id": "Jse48",
+                          "name": "teamPlaceholder",
+                          "fill": "$--muted-foreground",
+                          "content": "按球队名称搜索，例如 Arsenal / 曼联",
+                          "fontFamily": "Inter",
+                          "fontSize": 14
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "U2gB0",
+                      "name": "companyField",
+                      "width": 220,
+                      "fill": "$--surface-alt",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$--border"
+                      },
+                      "layout": "vertical",
+                      "gap": 6,
+                      "padding": [
+                        10,
+                        12
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "ZKKy1",
+                          "name": "companyLabel",
+                          "fill": "$--muted-foreground",
+                          "content": "博彩公司",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "600",
+                          "letterSpacing": 1
+                        },
+                        {
+                          "type": "text",
+                          "id": "NkgLG",
+                          "name": "companyValue",
+                          "fill": "$--foreground",
+                          "content": "Bet365 / Pinnacle / 188Bet",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "8ss5g",
+                      "name": "searchBtn",
+                      "width": 120,
+                      "fill": "$--primary",
+                      "cornerRadius": 12,
+                      "gap": 8,
+                      "padding": [
+                        12,
+                        14
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon_font",
+                          "id": "1zJlR",
+                          "name": "searchIcon",
+                          "width": 16,
+                          "height": 16,
+                          "iconFontName": "search",
+                          "iconFontFamily": "lucide",
+                          "fill": "#FFFFFF"
+                        },
+                        {
+                          "type": "text",
+                          "id": "yLKr2",
+                          "name": "searchLabel",
+                          "fill": "#FFFFFF",
+                          "content": "查询赔率",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "bFWMd",
+              "name": "Content Row",
+              "width": "fill_container",
+              "gap": 20,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "v23Gq",
+                  "name": "Main Column",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 20,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "tgcyk",
+                      "name": "Metrics Row",
+                      "width": "fill_container",
+                      "gap": 16,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "DZ43y",
+                          "name": "metric1",
+                          "width": "fill_container",
+                          "fill": "#FFFFFF",
+                          "cornerRadius": 16,
+                          "stroke": {
+                            "align": "inside",
+                            "thickness": 1,
+                            "fill": "$--border"
+                          },
+                          "layout": "vertical",
+                          "gap": 6,
+                          "padding": 18,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "8mBrS",
+                              "name": "m1Label",
+                              "fill": "$--muted-foreground",
+                              "content": "今日比赛",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "600",
+                              "letterSpacing": 1
+                            },
+                            {
+                              "type": "text",
+                              "id": "dIVb3",
+                              "name": "m1Value",
+                              "fill": "$--foreground",
+                              "content": "24",
+                              "fontFamily": "Inter",
+                              "fontSize": 28,
+                              "fontWeight": "700"
+                            },
+                            {
+                              "type": "text",
+                              "id": "mppIG",
+                              "name": "m1Sub",
+                              "fill": "$--muted-foreground",
+                              "content": "覆盖 8 个联赛",
+                              "fontFamily": "Inter",
+                              "fontSize": 13
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Y4SAK",
+                          "name": "metric2",
+                          "width": "fill_container",
+                          "fill": "#FFFFFF",
+                          "cornerRadius": 16,
+                          "stroke": {
+                            "align": "inside",
+                            "thickness": 1,
+                            "fill": "$--border"
+                          },
+                          "layout": "vertical",
+                          "gap": 6,
+                          "padding": 18,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "8ieTj",
+                              "name": "m2Label",
+                              "fill": "$--muted-foreground",
+                              "content": "接入公司",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "600",
+                              "letterSpacing": 1
+                            },
+                            {
+                              "type": "text",
+                              "id": "PniTl",
+                              "name": "m2Value",
+                              "fill": "$--foreground",
+                              "content": "12",
+                              "fontFamily": "Inter",
+                              "fontSize": 28,
+                              "fontWeight": "700"
+                            },
+                            {
+                              "type": "text",
+                              "id": "VqNuR",
+                              "name": "m2Sub",
+                              "fill": "$--muted-foreground",
+                              "content": "支持多家公司横向对比",
+                              "fontFamily": "Inter",
+                              "fontSize": 13
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "hRhdI",
+                          "name": "metric3",
+                          "width": "fill_container",
+                          "fill": "#FFFFFF",
+                          "cornerRadius": 16,
+                          "stroke": {
+                            "align": "inside",
+                            "thickness": 1,
+                            "fill": "$--border"
+                          },
+                          "layout": "vertical",
+                          "gap": 6,
+                          "padding": 18,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "TvAec",
+                              "name": "m3Label",
+                              "fill": "$--muted-foreground",
+                              "content": "历史回溯",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "600",
+                              "letterSpacing": 1
+                            },
+                            {
+                              "type": "text",
+                              "id": "5yVEG",
+                              "name": "m3Value",
+                              "fill": "$--foreground",
+                              "content": "API",
+                              "fontFamily": "Inter",
+                              "fontSize": 28,
+                              "fontWeight": "700"
+                            },
+                            {
+                              "type": "text",
+                              "id": "CjrpK",
+                              "name": "m3Sub",
+                              "fill": "$--muted-foreground",
+                              "content": "可选显示盘口时间序列",
+                              "fontFamily": "Inter",
+                              "fontSize": 13
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "lWndw",
+                      "name": "Odds Table Card",
+                      "width": "fill_container",
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 16,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$--border"
+                      },
+                      "layout": "vertical",
+                      "gap": 16,
+                      "padding": 20,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "FxLMU",
+                          "name": "tableHead",
+                          "width": "fill_container",
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "XhSR2",
+                              "name": "tableTitleWrap",
+                              "layout": "vertical",
+                              "gap": 4,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "hEYNQ",
+                                  "name": "tableTitle",
+                                  "fill": "$--foreground",
+                                  "content": "多家博彩公司赔率对比",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 20,
+                                  "fontWeight": "600"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "L0pXy",
+                                  "name": "tableSub",
+                                  "fill": "$--muted-foreground",
+                                  "textGrowth": "fixed-width",
+                                  "width": 520,
+                                  "content": "示例展示主胜 / 平 / 客胜欧赔，可按球队、联赛与公司组合过滤。",
+                                  "lineHeight": 1.5,
+                                  "fontFamily": "Inter",
+                                  "fontSize": 13
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "C7aK7",
+                              "name": "tableFilters",
+                              "gap": 10,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "ign5S",
+                                  "name": "chip1",
+                                  "fill": "$--primary-soft",
+                                  "cornerRadius": 999,
+                                  "padding": [
+                                    8,
+                                    12
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "MV8UQ",
+                                      "name": "chip1Text",
+                                      "fill": "$--primary",
+                                      "content": "全部公司",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 13,
+                                      "fontWeight": "600"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "2UouP",
+                                  "name": "chip2",
+                                  "fill": "$--surface-alt",
+                                  "cornerRadius": 999,
+                                  "stroke": {
+                                    "align": "inside",
+                                    "thickness": 1,
+                                    "fill": "$--border"
+                                  },
+                                  "padding": [
+                                    8,
+                                    12
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "AUxnr",
+                                      "name": "chip2Text",
+                                      "fill": "$--foreground",
+                                      "content": "即时赔率",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 13,
+                                      "fontWeight": "600"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "AgNNu",
+                          "name": "Table Wrap",
+                          "width": "fill_container",
+                          "fill": "$--surface-alt",
+                          "cornerRadius": 14,
+                          "stroke": {
+                            "align": "inside",
+                            "thickness": 1,
+                            "fill": "$--border"
+                          },
+                          "layout": "vertical",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "hAzfM",
+                              "name": "headerRow",
+                              "width": "fill_container",
+                              "fill": "#F8FAFC",
+                              "padding": [
+                                14,
+                                16
+                              ],
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "BMiZ3",
+                                  "name": "hCell1",
+                                  "width": 220,
+                                  "layout": "vertical",
+                                  "justifyContent": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "4RTOE",
+                                      "name": "hCell1Text",
+                                      "fill": "$--muted-foreground",
+                                      "content": "比赛",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12,
+                                      "fontWeight": "600",
+                                      "letterSpacing": 1
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "TSVGl",
+                                  "name": "hCell2",
+                                  "width": 130,
+                                  "layout": "vertical",
+                                  "justifyContent": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "Ygrn4",
+                                      "name": "hCell2Text",
+                                      "fill": "$--muted-foreground",
+                                      "content": "公司",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12,
+                                      "fontWeight": "600",
+                                      "letterSpacing": 1
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "C2JbW",
+                                  "name": "hCell3",
+                                  "width": 110,
+                                  "layout": "vertical",
+                                  "justifyContent": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "gSE5H",
+                                      "name": "hCell3Text",
+                                      "fill": "$--muted-foreground",
+                                      "content": "主胜",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12,
+                                      "fontWeight": "600",
+                                      "letterSpacing": 1
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "I5sqg",
+                                  "name": "hCell4",
+                                  "width": 110,
+                                  "layout": "vertical",
+                                  "justifyContent": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "4cwvi",
+                                      "name": "hCell4Text",
+                                      "fill": "$--muted-foreground",
+                                      "content": "平",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12,
+                                      "fontWeight": "600",
+                                      "letterSpacing": 1
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "jG6VL",
+                                  "name": "hCell5",
+                                  "width": "fill_container",
+                                  "layout": "vertical",
+                                  "justifyContent": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "iciFR",
+                                      "name": "hCell5Text",
+                                      "fill": "$--muted-foreground",
+                                      "content": "客胜",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12,
+                                      "fontWeight": "600",
+                                      "letterSpacing": 1
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "5p44y",
+                              "name": "row1",
+                              "width": "fill_container",
+                              "fill": "#FFFFFF",
+                              "stroke": {
+                                "align": "inside",
+                                "thickness": {
+                                  "top": 1
+                                },
+                                "fill": "$--border"
+                              },
+                              "padding": 16,
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "CBp7q",
+                                  "name": "r1c1",
+                                  "width": 220,
+                                  "layout": "vertical",
+                                  "gap": 4,
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "3qDaC",
+                                      "name": "r1c1Top",
+                                      "fill": "$--foreground",
+                                      "content": "阿森纳 vs 切尔西",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 14,
+                                      "fontWeight": "600"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "pzqnq",
+                                      "name": "r1c1Sub",
+                                      "fill": "$--muted-foreground",
+                                      "content": "英超 | 19:30",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "dk1t4",
+                                  "name": "r1c2",
+                                  "width": 130,
+                                  "layout": "vertical",
+                                  "justifyContent": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "9nyRy",
+                                      "name": "r1c2Text",
+                                      "fill": "$--foreground",
+                                      "content": "Bet365",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 14,
+                                      "fontWeight": "500"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "69T9f",
+                                  "name": "r1c3",
+                                  "width": 110,
+                                  "layout": "vertical",
+                                  "justifyContent": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "MW94K",
+                                      "name": "r1c3Text",
+                                      "fill": "$--foreground",
+                                      "content": "1.82",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 14,
+                                      "fontWeight": "600"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "je5zi",
+                                  "name": "r1c4",
+                                  "width": 110,
+                                  "layout": "vertical",
+                                  "justifyContent": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "uVEWB",
+                                      "name": "r1c4Text",
+                                      "fill": "$--foreground",
+                                      "content": "3.48",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 14,
+                                      "fontWeight": "600"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "RBZa0",
+                                  "name": "r1c5",
+                                  "width": "fill_container",
+                                  "layout": "vertical",
+                                  "justifyContent": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "pGxEz",
+                                      "name": "r1c5Text",
+                                      "fill": "$--foreground",
+                                      "content": "4.20",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 14,
+                                      "fontWeight": "600"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "gdTyk",
+                              "name": "row2",
+                              "width": "fill_container",
+                              "fill": "#FFFFFF",
+                              "stroke": {
+                                "align": "inside",
+                                "thickness": {
+                                  "top": 1
+                                },
+                                "fill": "$--border"
+                              },
+                              "padding": 16,
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "qrRRX",
+                                  "name": "r2c1",
+                                  "width": 220,
+                                  "layout": "vertical",
+                                  "gap": 4,
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "YvujJ",
+                                      "name": "r2c1Top",
+                                      "fill": "$--foreground",
+                                      "content": "阿森纳 vs 切尔西",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 14,
+                                      "fontWeight": "600"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "2dBLp",
+                                      "name": "r2c1Sub",
+                                      "fill": "$--muted-foreground",
+                                      "content": "英超 | 19:30",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "4X0wo",
+                                  "name": "r2c2",
+                                  "width": 130,
+                                  "layout": "vertical",
+                                  "justifyContent": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "ZtZst",
+                                      "name": "r2c2Text",
+                                      "fill": "$--foreground",
+                                      "content": "Pinnacle",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 14,
+                                      "fontWeight": "500"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "Jarc4",
+                                  "name": "r2c3",
+                                  "width": 110,
+                                  "layout": "vertical",
+                                  "justifyContent": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "WLHga",
+                                      "name": "r2c3Text",
+                                      "fill": "$--foreground",
+                                      "content": "1.79",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 14,
+                                      "fontWeight": "600"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "cwoFI",
+                                  "name": "r2c4",
+                                  "width": 110,
+                                  "layout": "vertical",
+                                  "justifyContent": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "9surj",
+                                      "name": "r2c4Text",
+                                      "fill": "$--foreground",
+                                      "content": "3.55",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 14,
+                                      "fontWeight": "600"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "2NgOn",
+                                  "name": "r2c5",
+                                  "width": "fill_container",
+                                  "layout": "vertical",
+                                  "justifyContent": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "3F5tW",
+                                      "name": "r2c5Text",
+                                      "fill": "$--foreground",
+                                      "content": "4.32",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 14,
+                                      "fontWeight": "600"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "7bBXw",
+                  "name": "Side Column",
+                  "width": 332,
+                  "layout": "vertical",
+                  "gap": 20,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "YKymU",
+                      "name": "historyCard",
+                      "width": "fill_container",
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 16,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$--border"
+                      },
+                      "layout": "vertical",
+                      "gap": 12,
+                      "padding": 20,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "sBKNv",
+                          "name": "historyLabel",
+                          "fill": "$--muted-foreground",
+                          "content": "HISTORY",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "600",
+                          "letterSpacing": 1
+                        },
+                        {
+                          "type": "text",
+                          "id": "etuyQ",
+                          "name": "historyTitle",
+                          "fill": "$--foreground",
+                          "content": "历史赔率查询",
+                          "fontFamily": "Inter",
+                          "fontSize": 20,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "xqS12",
+                          "name": "historyDesc",
+                          "fill": "$--muted-foreground",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "若 API 支持，可查看指定比赛在不同时间点的赔率变化。",
+                          "lineHeight": 1.5,
+                          "fontFamily": "Inter",
+                          "fontSize": 13
+                        },
+                        {
+                          "type": "text",
+                          "id": "a7FqM",
+                          "name": "historyItem1",
+                          "fill": "$--foreground",
+                          "content": "09:00  Bet365  1.88 / 3.42 / 4.08",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "500"
+                        },
+                        {
+                          "type": "text",
+                          "id": "IIhvY",
+                          "name": "historyItem2",
+                          "fill": "$--foreground",
+                          "content": "14:00  Bet365  1.82 / 3.48 / 4.20",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "500"
+                        },
+                        {
+                          "type": "text",
+                          "id": "akL3u",
+                          "name": "historyHint",
+                          "fill": "$--primary",
+                          "content": "支持按开盘、即时、收盘切换。",
+                          "fontFamily": "Inter",
+                          "fontSize": 12
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Yb9CW",
+                      "name": "exportCard",
+                      "width": "fill_container",
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 16,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$--border"
+                      },
+                      "layout": "vertical",
+                      "gap": 12,
+                      "padding": 20,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "sLQIN",
+                          "name": "exportLabel2",
+                          "fill": "$--muted-foreground",
+                          "content": "EXPORT",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "600",
+                          "letterSpacing": 1
+                        },
+                        {
+                          "type": "text",
+                          "id": "eqJ9f",
+                          "name": "exportTitle2",
+                          "fill": "$--foreground",
+                          "content": "结果导出为 CSV",
+                          "fontFamily": "Inter",
+                          "fontSize": 20,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "2Cznc",
+                          "name": "exportDesc2",
+                          "fill": "$--muted-foreground",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "导出当前筛选结果，包含比赛、时间、博彩公司与主平客赔率字段。",
+                          "lineHeight": 1.5,
+                          "fontFamily": "Inter",
+                          "fontSize": 13
+                        },
+                        {
+                          "type": "text",
+                          "id": "uJcBr",
+                          "name": "exportMeta",
+                          "fill": "$--foreground",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "字段：league, kickoff, home, away, bookmaker, home_win, draw, away_win",
+                          "lineHeight": 1.5,
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "500"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "L9oXx",
+                          "name": "exportBtn2",
+                          "width": "fill_container",
+                          "fill": "$--primary",
+                          "cornerRadius": 12,
+                          "padding": [
+                            12,
+                            14
+                          ],
+                          "justifyContent": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "IxEb4",
+                              "name": "exportBtn2Text",
+                              "fill": "#FFFFFF",
+                              "content": "下载 CSV 文件",
+                              "fontFamily": "Inter",
+                              "fontSize": 14,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "--background": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "--border": {
+      "type": "color",
+      "value": "#E2E8F0"
+    },
+    "--font-primary": {
+      "type": "string",
+      "value": "Inter"
+    },
+    "--font-secondary": {
+      "type": "string",
+      "value": "Inter"
+    },
+    "--foreground": {
+      "type": "color",
+      "value": "#0F172A"
+    },
+    "--muted-foreground": {
+      "type": "color",
+      "value": "#64748B"
+    },
+    "--primary": {
+      "type": "color",
+      "value": "#2563EB"
+    },
+    "--primary-soft": {
+      "type": "color",
+      "value": "#EFF6FF"
+    },
+    "--radius-m": {
+      "type": "number",
+      "value": 16
+    },
+    "--radius-pill": {
+      "type": "number",
+      "value": 999
+    },
+    "--radius-s": {
+      "type": "number",
+      "value": 12
+    },
+    "--success": {
+      "type": "color",
+      "value": "#16A34A"
+    },
+    "--surface": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "--surface-alt": {
+      "type": "color",
+      "value": "#F8FAFC"
+    },
+    "--warning": {
+      "type": "color",
+      "value": "#D97706"
+    }
+  }
+}
