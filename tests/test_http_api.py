@@ -17,6 +17,8 @@ def test_health_check():
 
 
 def test_get_odds_parsed(monkeypatch):
+    monkeypatch.setattr(http_api.translator, "translate_matches", lambda matches: matches)
+
     class StubClient:
         def get_odds(self, sport, regions, markets):
             assert sport == "soccer_epl"
@@ -25,6 +27,8 @@ def test_get_odds_parsed(monkeypatch):
             return [
                 {
                     "id": "match-1",
+                    "sport_key": "soccer_epl",
+                    "sport_title": "EPL",
                     "home_team": "Arsenal",
                     "away_team": "Chelsea",
                     "commence_time": "2026-03-20T12:00:00Z",
@@ -39,12 +43,15 @@ def test_get_odds_parsed(monkeypatch):
 
     assert response.status_code == 200
     body = response.json()
+    assert body[0]["sport_title"] == "EPL"
     assert body[0]["home_team"] == "Arsenal"
     assert body[0]["away_team"] == "Chelsea"
     assert body[0]["bookmakers"] == []
 
 
 def test_get_sports(monkeypatch):
+    monkeypatch.setattr(http_api.translator, "translate_sports", lambda sports: sports)
+
     class StubClient:
         def get_sports(self):
             return [{"key": "soccer_epl", "title": "EPL"}]

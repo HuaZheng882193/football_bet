@@ -5,6 +5,8 @@ def parse_odds_data(raw_data):
     for event in raw_data:
         match = {
             "id": event["id"],
+            "sport_key": event.get("sport_key"),
+            "sport_title": event.get("sport_title"),
             "home_team": event["home_team"],
             "away_team": event["away_team"],
             "commence_time": datetime.fromisoformat(event["commence_time"].replace("Z", "+00:00")),

@@ -4,6 +4,7 @@ from requests import HTTPError
 
 from api_client import OddsAPIClient
 from data_parser import parse_odds_data
+from translation_service import translator
 
 app = FastAPI(
     title="Football Bet API",
@@ -36,7 +37,7 @@ def health_check():
 def get_sports():
     client = get_client()
     try:
-        return client.get_sports()
+        return translator.translate_sports(client.get_sports())
     except HTTPError as exc:
         detail = exc.response.text if exc.response is not None else str(exc)
         raise HTTPException(status_code=502, detail=detail) from exc
@@ -61,4 +62,4 @@ def get_odds(
     if not parsed:
         return raw_data
 
-    return parse_odds_data(raw_data)
+    return translator.translate_matches(parse_odds_data(raw_data))
