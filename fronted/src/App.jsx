@@ -83,6 +83,21 @@ function normalizeMatch(match) {
   };
 }
 
+async function fetchOddsBySport(sport) {
+  const params = new URLSearchParams({
+    sport,
+    regions: DEFAULT_REGIONS,
+    markets: DEFAULT_MARKETS,
+    parsed: "true"
+  });
+  const response = await fetch(`${API_BASE_URL}/odds?${params.toString()}`);
+  if (!response.ok) {
+    throw new Error(`odds request failed: ${response.status}`);
+  }
+  const data = await response.json();
+  return data.map(normalizeMatch);
+}
+
 function SearchIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -110,6 +125,14 @@ function ChevronIcon() {
   );
 }
 
+function OddsCell({ label, value, className = "" }) {
+  return (
+    <div className={`odds-cell ${className}`.trim()} data-label={label}>
+      <span>{value}</span>
+    </div>
+  );
+}
+
 function OddsRow({ row }) {
   return (
     <div className="odds-row">
@@ -118,43 +141,30 @@ function OddsRow({ row }) {
         <span>{row.bookmaker}</span>
       </div>
 
-      <div className="odds-group" data-label="胜平负">
-        {row.oneXTwo.map((value, index) => (
-          <span key={`${row.bookmaker}-1x2-${index}`} className={index === 0 ? "is-highlight" : ""}>
-            {value}
-          </span>
-        ))}
-      </div>
+      <OddsCell label="胜" value={row.oneXTwo[0]} className="is-highlight" />
+      <OddsCell label="平" value={row.oneXTwo[1]} />
+      <OddsCell label="负" value={row.oneXTwo[2]} className="is-main" />
 
-      <div className="odds-group" data-label="让球">
-        {row.handicap.map((value, index) => (
-          <span key={`${row.bookmaker}-hdp-${index}`} className={index === 0 ? "is-line" : index === 1 ? "is-main" : ""}>
-            {value}
-          </span>
-        ))}
-      </div>
+      <OddsCell label="让球" value={row.handicap[0]} className="is-line" />
+      <OddsCell label="胜" value={row.handicap[1]} className="is-main" />
+      <OddsCell label="负" value={row.handicap[2]} />
 
-      <div className="odds-group" data-label="大小球">
-        {row.totals.map((value, index) => (
-          <span key={`${row.bookmaker}-ou-${index}`} className={index === 0 ? "is-line" : index === 1 ? "is-main" : ""}>
-            {value}
-          </span>
-        ))}
-      </div>
+      <OddsCell label="进球数" value={row.totals[0]} className="is-line" />
+      <OddsCell label="高于" value={row.totals[1]} className="is-main" />
+      <OddsCell label="低于" value={row.totals[2]} />
     </div>
   );
 }
 
-function MatchCard({ match }) {
-  const [isExpanded, setIsExpanded] = useState(false);
-
+function MatchCard({ match, isExpanded, isRefreshing, onToggle }) {
   return (
     <section className={`match-card ${isExpanded ? "is-expanded" : "is-collapsed"}`}>
       <button
         type="button"
         className="match-card__toggle"
-        onClick={() => setIsExpanded((value) => !value)}
+        onClick={() => onToggle(match.id, isExpanded)}
         aria-expanded={isExpanded}
+        disabled={isRefreshing}
       >
         <div className="match-card__header">
           <div>
@@ -164,8 +174,10 @@ function MatchCard({ match }) {
           </div>
 
           <div className="match-card__meta">
-            <span className="match-card__count">{match.rows.length} 家机构</span>
-            <span className={`match-card__arrow ${isExpanded ? "is-open" : ""}`}>
+            <span className="match-card__count">
+              {isRefreshing ? "刷新中..." : `${match.rows.length} 家机构`}
+            </span>
+            <span className={`match-card__arrow ${isExpanded ? "is-open" : ""} ${isRefreshing ? "is-loading" : ""}`}>
               <ChevronIcon />
             </span>
           </div>
@@ -176,9 +188,15 @@ function MatchCard({ match }) {
         <div className="odds-table">
           <div className="odds-table__header">
             <span>机构</span>
-            <span>胜平负</span>
+            <span>胜</span>
+            <span>平</span>
+            <span>负</span>
             <span>让球</span>
-            <span>大小球</span>
+            <span>胜</span>
+            <span>负</span>
+            <span>进球数</span>
+            <span>高于</span>
+            <span>低于</span>
           </div>
 
           <div className="odds-table__body">
@@ -201,6 +219,8 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [isSportMenuOpen, setIsSportMenuOpen] = useState(false);
+  const [expandedMatchId, setExpandedMatchId] = useState("");
+  const [refreshingMatchId, setRefreshingMatchId] = useState("");
 
   useEffect(() => {
     let ignore = false;
@@ -215,9 +235,7 @@ function App() {
         const data = await response.json();
         if (!ignore) {
           setSports(data);
-
-          const preferredSport =
-            data.find((item) => item.key === DEFAULT_SPORT) || data[0];
+          const preferredSport = data.find((item) => item.key === DEFAULT_SPORT) || data[0];
 
           if (preferredSport) {
             setSelectedSport(preferredSport.key);
@@ -246,20 +264,10 @@ function App() {
       setError("");
 
       try {
-        const params = new URLSearchParams({
-          sport: selectedSport,
-          regions: DEFAULT_REGIONS,
-          markets: DEFAULT_MARKETS,
-          parsed: "true"
-        });
-        const response = await fetch(`${API_BASE_URL}/odds?${params.toString()}`);
-        if (!response.ok) {
-          throw new Error(`odds request failed: ${response.status}`);
-        }
-
-        const data = await response.json();
+        const latestMatches = await fetchOddsBySport(selectedSport);
         if (!ignore) {
-          setMatches(data.map(normalizeMatch));
+          setMatches(latestMatches);
+          setExpandedMatchId("");
         }
       } catch (loadError) {
         if (!ignore) {
@@ -309,6 +317,30 @@ function App() {
     return matches.filter((match) => match.fixture.toLowerCase().includes(query));
   }, [matches, teamQuery]);
 
+  async function refreshMatchData(matchId) {
+    setRefreshingMatchId(matchId);
+    setError("");
+
+    try {
+      const latestMatches = await fetchOddsBySport(selectedSport);
+      setMatches(latestMatches);
+      setExpandedMatchId(matchId);
+    } catch (loadError) {
+      setError(loadError.message || "刷新赔率失败");
+    } finally {
+      setRefreshingMatchId("");
+    }
+  }
+
+  async function handleMatchToggle(matchId, isExpanded) {
+    if (isExpanded) {
+      setExpandedMatchId("");
+      return;
+    }
+
+    await refreshMatchData(matchId);
+  }
+
   function exportJson() {
     const payload = JSON.stringify(filteredMatches, null, 2);
     const blob = new Blob([payload], { type: "application/json" });
@@ -324,6 +356,7 @@ function App() {
     setSelectedSport(sport.key);
     setSportQuery(sport.title);
     setIsSportMenuOpen(false);
+    setExpandedMatchId("");
   }
 
   return (
@@ -433,7 +466,13 @@ function App() {
 
           <div className="matches-list">
             {filteredMatches.map((match) => (
-              <MatchCard key={match.id} match={match} />
+              <MatchCard
+                key={match.id}
+                match={match}
+                isExpanded={expandedMatchId === match.id}
+                isRefreshing={refreshingMatchId === match.id}
+                onToggle={handleMatchToggle}
+              />
             ))}
           </div>
         </section>

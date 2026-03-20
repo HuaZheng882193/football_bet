@@ -441,6 +441,10 @@ svg {
   background: rgba(245, 158, 11, 0.08);
 }
 
+.match-card__arrow.is-loading {
+  animation: pulse-arrow 0.8s ease-in-out infinite alternate;
+}
+
 .history-button {
   display: inline-flex;
   align-items: center;
@@ -463,7 +467,7 @@ svg {
 .odds-table__header,
 .odds-row {
   display: grid;
-  grid-template-columns: minmax(140px, 1.05fr) repeat(3, minmax(180px, 1fr));
+  grid-template-columns: minmax(180px, 1.7fr) repeat(9, minmax(52px, 0.7fr));
   gap: 14px;
   align-items: center;
 }
@@ -487,7 +491,7 @@ svg {
 }
 
 .bookmaker-cell,
-.odds-group {
+.odds-cell {
   display: grid;
   align-items: center;
   min-width: 0;
@@ -522,29 +526,26 @@ svg {
   color: var(--text-primary);
 }
 
-.odds-group {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+.odds-cell {
   justify-items: center;
-  gap: 12px;
   text-align: center;
 }
 
-.odds-group span {
-  min-width: 3ch;
+.odds-cell span {
   color: var(--text-secondary);
   font-weight: 600;
 }
 
-.odds-group .is-highlight,
-.odds-group .is-main {
+.odds-cell.is-highlight span,
+.odds-cell.is-main span {
   color: var(--text-primary);
 }
 
-.odds-group .is-highlight {
+.odds-cell.is-highlight span {
   color: var(--accent-soft);
 }
 
-.odds-group .is-line {
+.odds-cell.is-line span {
   color: var(--text-muted);
 }
 
@@ -621,14 +622,14 @@ svg {
   }
 
   .bookmaker-cell,
-  .odds-group {
+  .odds-cell {
     display: flex;
     justify-content: space-between;
     gap: 18px;
     text-align: left;
   }
 
-  .odds-group::before,
+  .odds-cell::before,
   .bookmaker-cell::before {
     content: attr(data-label);
     color: var(--accent-soft);
@@ -655,8 +656,20 @@ svg {
     font-size: 28px;
   }
 
-  .odds-group span {
+  .odds-cell span {
     min-width: auto;
     font-size: 14px;
+  }
+}
+
+@keyframes pulse-arrow {
+  from {
+    opacity: 0.55;
+    transform: scale(0.92);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
