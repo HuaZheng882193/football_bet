@@ -1,0 +1,56 @@
+[
+  {
+    "id": "bet_1774357576773",
+    "time": "2026-03-24T13:06:16.773Z",
+    "matchId": "b8378250ee64a0a041231acf65e18444",
+    "fixture": "天津金门老虎FC 对阵 上海申花FC",
+    "market": "标准盘",
+    "selection": "负",
+    "price": "1.72",
+    "bookmaker": "SportsBet",
+    "stake": 200,
+    "estimatedReturn": 344,
+    "status": "void"
+  },
+  {
+    "id": "bet_1774357596224",
+    "time": "2026-03-24T13:06:36.224Z",
+    "matchId": "74c01653d38cee00dddaad0d3cd643db",
+    "fixture": "辽宁铁人FC 对阵 北京足球俱乐部",
+    "market": "标准盘",
+    "selection": "胜",
+    "price": "2.9",
+    "bookmaker": "Paddy Power",
+    "stake": 50,
+    "estimatedReturn": 145,
+    "status": "lose"
+  },
+  {
+    "id": "bet_1774359196928",
+    "time": "2026-03-24T13:33:16.928Z",
+    "matchId": "1af9468dc4f5c35e36c873907259dfb0",
+    "fixture": "上海上港 对阵 云南霞山",
+    "market": "标准盘",
+    "selection": "平",
+    "price": "3.4",
+    "bookmaker": "Betfair Sportsbook",
+    "bettor": "毛总",
+    "stake": 100,
+    "estimatedReturn": 340,
+    "status": "win"
+  },
+  {
+    "id": "bet_1774359251777",
+    "time": "2026-03-24T13:34:11.777Z",
+    "matchId": "74c01653d38cee00dddaad0d3cd643db",
+    "fixture": "辽宁铁人FC 对阵 北京足球俱乐部",
+    "market": "进球数",
+    "selection": "低于",
+    "price": "2.05",
+    "bookmaker": "William Hill",
+    "bettor": "孙",
+    "stake": 200,
+    "estimatedReturn": 410,
+    "status": "void"
+  }
+]

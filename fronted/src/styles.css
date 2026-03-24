@@ -673,3 +673,211 @@ svg {
     transform: scale(1);
   }
 }
+
+.odds-cell--clickable {
+  transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+  user-select: none;
+}
+
+.odds-cell--clickable:hover {
+  background: rgba(245, 158, 11, 0.15);
+  transform: translateY(-1px);
+}
+
+.odds-cell--clickable:active {
+  transform: translateY(1px);
+}
+
+.odds-cell.is-selected {
+  background: #10b981;
+  border-color: #10b981;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
+.odds-cell.is-selected span {
+  color: #fff !important;
+  font-weight: 800;
+}
+
+.betslip-panel {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 340px;
+  background: var(--bg-card-strong);
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(20px);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: slide-up 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.betslip-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: rgba(16, 185, 129, 0.1);
+  border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.betslip-header h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #10b981;
+}
+
+.betslip-close {
+  background: transparent;
+  color: var(--text-tertiary);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+  padding: 0;
+}
+
+.betslip-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+}
+
+.betslip-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.betslip-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.betslip-selection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.selection-price {
+  color: #10b981;
+}
+
+.betslip-market,
+.betslip-fixture {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.betslip-stake {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.betslip-stake label {
+  font-size: 13px;
+  color: var(--text-tertiary);
+}
+
+.stake-input-wrapper {
+  display: flex;
+  align-items: center;
+  background: var(--bg-inset);
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-sm);
+  padding: 0 12px;
+  height: 44px;
+  transition: border-color 0.2s;
+}
+
+.stake-input-wrapper:focus-within {
+  border-color: #10b981;
+}
+
+.currency-symbol {
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-right: 8px;
+}
+
+.stake-input-wrapper input {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  width: 100%;
+}
+
+.betslip-returns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0 16px;
+  border-bottom: 1px solid var(--border-divider);
+  margin-bottom: 4px;
+}
+
+.returns-label {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.returns-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: #10b981;
+}
+
+.betslip-submit {
+  background: #10b981;
+  color: #fff;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  font-size: 16px;
+  font-weight: 700;
+  transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.betslip-submit:hover:not(:disabled) {
+  background: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(16, 185, 129, 0.35);
+}
+
+.betslip-submit:disabled {
+  background: rgba(148, 163, 184, 0.2);
+  color: rgba(255, 255, 255, 0.3);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+@media (max-width: 520px) {
+  .betslip-panel {
+    bottom: 12px;
+    right: 12px;
+    left: 12px;
+    width: auto;
+  }
+}

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import Admin from "./Admin";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
 const DEFAULT_SPORT = "soccer_china_superleague";
@@ -125,15 +126,57 @@ function ChevronIcon() {
   );
 }
 
-function OddsCell({ label, value, className = "" }) {
+function XIcon() {
   return (
-    <div className={`odds-cell ${className}`.trim()} data-label={label}>
-      <span>{value}</span>
-    </div>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M18 6L6 18" />
+      <path d="M6 6L18 18" />
+    </svg>
   );
 }
 
-function OddsRow({ row }) {
+function OddsCell({ label, value, className = "", isSelected, onClick }) {
+  const isClickable = value !== "--" && value !== null && value !== undefined && !!onClick;
+  
+  if (!isClickable) {
+    return (
+      <div className={`odds-cell ${className}`.trim()} data-label={label}>
+        <span>{value}</span>
+      </div>
+    );
+  }
+
+  return (
+    <button 
+      type="button"
+      className={`odds-cell odds-cell--clickable ${isSelected ? "is-selected" : ""} ${className}`.trim()} 
+      data-label={label}
+      onClick={onClick}
+    >
+      <span>{value}</span>
+    </button>
+  );
+}
+
+function OddsRow({ match, row, betslip, onBetSelect }) {
+  const isSelected = (market, selection) => {
+    return betslip?.matchId === match.id && 
+           betslip?.bookmaker === row.bookmaker && 
+           betslip?.market === market && 
+           betslip?.selection === selection;
+  };
+
+  const handleSelect = (market, selection, price) => {
+    onBetSelect({
+      matchId: match.id,
+      fixture: match.fixture,
+      market,
+      selection,
+      price,
+      bookmaker: row.bookmaker
+    });
+  };
+
   return (
     <div className="odds-row">
       <div className="bookmaker-cell" data-label="机构">
@@ -141,22 +184,61 @@ function OddsRow({ row }) {
         <span>{row.bookmaker}</span>
       </div>
 
-      <OddsCell label="胜" value={row.oneXTwo[0]} className="is-highlight" />
-      <OddsCell label="平" value={row.oneXTwo[1]} />
-      <OddsCell label="负" value={row.oneXTwo[2]} className="is-main" />
+      <OddsCell 
+        label="胜" 
+        value={row.oneXTwo[0]} 
+        className="is-highlight"
+        isSelected={isSelected("标准盘", "胜")}
+        onClick={() => handleSelect("标准盘", "胜", row.oneXTwo[0])}
+      />
+      <OddsCell 
+        label="平" 
+        value={row.oneXTwo[1]} 
+        isSelected={isSelected("标准盘", "平")}
+        onClick={() => handleSelect("标准盘", "平", row.oneXTwo[1])}
+      />
+      <OddsCell 
+        label="负" 
+        value={row.oneXTwo[2]} 
+        className="is-main"
+        isSelected={isSelected("标准盘", "负")}
+        onClick={() => handleSelect("标准盘", "负", row.oneXTwo[2])}
+      />
 
       <OddsCell label="让球" value={row.handicap[0]} className="is-line" />
-      <OddsCell label="胜" value={row.handicap[1]} className="is-main" />
-      <OddsCell label="负" value={row.handicap[2]} />
+      <OddsCell 
+        label="胜" 
+        value={row.handicap[1]} 
+        className="is-main"
+        isSelected={isSelected("让球", "胜")}
+        onClick={() => handleSelect("让球", "胜", row.handicap[1])}
+      />
+      <OddsCell 
+        label="负" 
+        value={row.handicap[2]} 
+        isSelected={isSelected("让球", "负")}
+        onClick={() => handleSelect("让球", "负", row.handicap[2])}
+      />
 
       <OddsCell label="进球数" value={row.totals[0]} className="is-line" />
-      <OddsCell label="高于" value={row.totals[1]} className="is-main" />
-      <OddsCell label="低于" value={row.totals[2]} />
+      <OddsCell 
+        label="高于" 
+        value={row.totals[1]} 
+        className="is-main"
+        isSelected={isSelected("进球数", "高于")}
+        onClick={() => handleSelect("进球数", "高于", row.totals[1])}
+      />
+      <OddsCell 
+        label="低于" 
+        value={row.totals[2]} 
+        isSelected={isSelected("进球数", "低于")}
+        onClick={() => handleSelect("进球数", "低于", row.totals[2])}
+      />
     </div>
   );
 }
 
-function MatchCard({ match, isExpanded, isRefreshing, onToggle }) {
+function MatchCard({ match, isExpanded, isRefreshing, onToggle, betslip, onBetSelect }) {
   return (
     <section className={`match-card ${isExpanded ? "is-expanded" : "is-collapsed"}`}>
       <button
@@ -201,12 +283,124 @@ function MatchCard({ match, isExpanded, isRefreshing, onToggle }) {
 
           <div className="odds-table__body">
             {match.rows.map((row) => (
-              <OddsRow key={`${match.id}-${row.bookmaker}`} row={row} />
+              <OddsRow 
+                key={`${match.id}-${row.bookmaker}`} 
+                match={match}
+                row={row} 
+                betslip={betslip}
+                onBetSelect={onBetSelect}
+              />
             ))}
           </div>
         </div>
       ) : null}
     </section>
+  );
+}
+
+function BetslipPanel({ bet, onClose }) {
+  const [stake, setStake] = useState("");
+  const [bettor, setBettor] = useState("");
+  
+  const returnAmount = stake ? (parseFloat(stake) * parseFloat(bet.price)).toFixed(2) : "0.00";
+
+  async function handlePlaceBet() {
+    const betData = {
+      id: `bet_${Date.now()}`,
+      time: new Date().toISOString(),
+      matchId: bet.matchId,
+      fixture: bet.fixture,
+      market: bet.market,
+      selection: bet.selection,
+      price: bet.price,
+      bookmaker: bet.bookmaker,
+      bettor: bettor.trim() || "匿名",
+      stake: Number(stake),
+      estimatedReturn: Number(returnAmount)
+    };
+    
+    try {
+      const response = await fetch(`${API_BASE_URL}/bet`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(betData)
+      });
+      
+      if (!response.ok) {
+        throw new Error("保存投注数据失败");
+      }
+      
+      alert(`成功投注 ¥${stake || 0} 于 "${bet.selection}"！\n数据已增量保存到后台的 bets.json 文件中。`); 
+      onClose();
+    } catch (err) {
+      alert(`投注出错: ${err.message}`);
+    }
+  }
+
+  return (
+    <div className="betslip-panel">
+      <div className="betslip-header">
+        <h3>投注单</h3>
+        <button type="button" className="betslip-close" onClick={onClose} aria-label="关闭投注单">
+          <XIcon />
+        </button>
+      </div>
+      <div className="betslip-body">
+        <div className="betslip-details">
+          <div className="betslip-selection">
+            <span className="selection-name">{bet.selection}</span>
+            <span className="selection-price">{bet.price}</span>
+          </div>
+          <div className="betslip-market">{bet.market} - {bet.bookmaker}</div>
+          <div className="betslip-fixture">{bet.fixture}</div>
+        </div>
+        
+        <div className="betslip-stake">
+          <label htmlFor="bettor-input">投注人姓名</label>
+          <div className="stake-input-wrapper">
+            <input 
+              id="bettor-input"
+              type="text" 
+              value={bettor} 
+              onChange={e => setBettor(e.target.value)} 
+              placeholder="请输入起名字（默认：匿名）"
+            />
+          </div>
+        </div>
+        
+        <div className="betslip-stake">
+          <label htmlFor="stake-input">投注金额</label>
+          <div className="stake-input-wrapper">
+            <span className="currency-symbol">¥</span>
+            <input 
+              id="stake-input"
+              type="number" 
+              value={stake} 
+              onChange={e => setStake(e.target.value)} 
+              placeholder="0.00"
+              min="0"
+              step="1"
+            />
+          </div>
+        </div>
+        
+        <div className="betslip-returns">
+          <span className="returns-label">预计回报</span>
+          <span className="returns-value">¥ {returnAmount}</span>
+        </div>
+        
+        <button 
+          type="button" 
+          className="betslip-submit" 
+          onClick={handlePlaceBet}
+          disabled={!stake || parseFloat(stake) <= 0}
+        >
+          确认投注
+        </button>
+      </div>
+    </div>
   );
 }
 
@@ -221,6 +415,8 @@ function App() {
   const [isSportMenuOpen, setIsSportMenuOpen] = useState(false);
   const [expandedMatchId, setExpandedMatchId] = useState("");
   const [refreshingMatchId, setRefreshingMatchId] = useState("");
+  const [betslip, setBetslip] = useState(null);
+  const [currentView, setCurrentView] = useState("user");
 
   useEffect(() => {
     let ignore = false;
@@ -357,6 +553,20 @@ function App() {
     setSportQuery(sport.title);
     setIsSportMenuOpen(false);
     setExpandedMatchId("");
+    setBetslip(null);
+  }
+
+  function handleBetSelect(bet) {
+    if (
+      betslip?.matchId === bet.matchId &&
+      betslip?.bookmaker === bet.bookmaker &&
+      betslip?.market === bet.market &&
+      betslip?.selection === bet.selection
+    ) {
+      setBetslip(null);
+    } else {
+      setBetslip(bet);
+    }
   }
 
   return (
@@ -366,30 +576,46 @@ function App() {
 
       <header className="topbar">
         <div className="brand-wrap">
-          <div className="brand">足球赔率查询</div>
-          <p className="brand-subtitle">多联赛赔率聚合与快速筛选</p>
+          <div className="brand">足球赔率系统</div>
+          <div style={{ display: 'flex', gap: '16px', marginTop: '12px' }}>
+            <button 
+              type="button" 
+              onClick={() => setCurrentView("user")}
+              style={{ padding: '6px 16px', borderRadius: '20px', background: currentView === "user" ? 'var(--accent)' : 'var(--bg-inset)', color: currentView === "user" ? 'var(--text-inverted)' : 'var(--text-primary)', fontWeight: 'bold' }}
+            >前台查询</button>
+            <button 
+              type="button" 
+              onClick={() => setCurrentView("admin")}
+              style={{ padding: '6px 16px', borderRadius: '20px', background: currentView === "admin" ? 'var(--accent)' : 'var(--bg-inset)', color: currentView === "admin" ? 'var(--text-inverted)' : 'var(--text-primary)', fontWeight: 'bold' }}
+            >后台管理</button>
+          </div>
         </div>
 
-        <div className="topbar__actions">
-          <label className="search-box" htmlFor="team-search">
-            <SearchIcon />
-            <input
-              id="team-search"
-              type="text"
-              placeholder="输入球队名称筛选"
-              value={teamQuery}
-              onChange={(event) => setTeamQuery(event.target.value)}
-            />
-          </label>
+        {currentView === "user" && (
+          <div className="topbar__actions">
+            <label className="search-box" htmlFor="team-search">
+              <SearchIcon />
+              <input
+                id="team-search"
+                type="text"
+                placeholder="输入球队名称筛选"
+                value={teamQuery}
+                onChange={(event) => setTeamQuery(event.target.value)}
+              />
+            </label>
 
-          <button type="button" className="export-button" onClick={exportJson}>
-            <DownloadIcon />
-            <span>导出 JSON</span>
-          </button>
-        </div>
+            <button type="button" className="export-button" onClick={exportJson}>
+              <DownloadIcon />
+              <span>导出 JSON</span>
+            </button>
+          </div>
+        )}
       </header>
 
-      <main className="content-grid">
+      {currentView === "admin" ? (
+        <Admin />
+      ) : (
+        <main className="content-grid">
         <aside className="sidebar-panel">
           <p className="sidebar-panel__eyebrow">筛选条件</p>
 
@@ -472,11 +698,16 @@ function App() {
                 isExpanded={expandedMatchId === match.id}
                 isRefreshing={refreshingMatchId === match.id}
                 onToggle={handleMatchToggle}
+                betslip={betslip}
+                onBetSelect={handleBetSelect}
               />
             ))}
           </div>
         </section>
       </main>
+      )}
+
+      {currentView === "user" && betslip && <BetslipPanel bet={betslip} onClose={() => setBetslip(null)} />}
     </div>
   );
 }

@@ -1,4 +1,6 @@
-from fastapi import FastAPI, HTTPException, Query
+import json
+import os
+from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from requests import HTTPError
 
@@ -63,3 +65,73 @@ def get_odds(
         return raw_data
 
     return translator.translate_matches(parse_odds_data(raw_data))
+
+@app.post("/bet")
+async def save_bet(request: Request):
+    try:
+        data = await request.json()
+        filepath = "bets.json"
+        
+        bets = []
+        if os.path.exists(filepath):
+            with open(filepath, "r", encoding="utf-8") as f:
+                try:
+                    bets = json.load(f)
+                except json.JSONDecodeError:
+                    bets = []
+                    
+        bets.append(data)
+        
+        with open(filepath, "w", encoding="utf-8") as f:
+            json.dump(bets, f, ensure_ascii=False, indent=2)
+            
+        return {"status": "success", "message": "Bet saved successfully"}
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+
+@app.get("/bets")
+def get_all_bets():
+    filepath = "bets.json"
+    if not os.path.exists(filepath):
+        return []
+    try:
+        with open(filepath, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+
+@app.post("/bets/settle")
+async def settle_bet(request: Request):
+    try:
+        data = await request.json()
+        bet_id = data.get("id")
+        status = data.get("status")
+
+        if not bet_id or not status:
+            raise HTTPException(status_code=400, detail="Missing id or status")
+
+        filepath = "bets.json"
+        if not os.path.exists(filepath):
+            raise HTTPException(status_code=404, detail="Bets file not found")
+
+        with open(filepath, "r", encoding="utf-8") as f:
+            bets = json.load(f)
+
+        updated = False
+        for bet in bets:
+            if bet.get("id") == bet_id:
+                bet["status"] = status
+                updated = True
+                break
+
+        if not updated:
+            raise HTTPException(status_code=404, detail="Bet not found")
+
+        with open(filepath, "w", encoding="utf-8") as f:
+            json.dump(bets, f, ensure_ascii=False, indent=2)
+
+        return {"status": "success", "message": "Bet settled successfully"}
+    except HTTPException:
+        raise
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
