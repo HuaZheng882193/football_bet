@@ -636,7 +636,7 @@ function App() {
 
       <header className="topbar">
         <div className="brand-wrap">
-          <div className="brand">足球赔率系统</div>
+          <div className="brand">Bets</div>
           <div style={{ display: "flex", gap: "16px", marginTop: "12px" }}>
             <button
               type="button"
@@ -704,13 +704,13 @@ function App() {
               />
             </label>
 
-            <button
+            {/* <button
               type="button"
               className="export-button"
               onClick={exportJson}>
               <DownloadIcon />
               <span>导出 JSON</span>
-            </button>
+            </button> */}
           </div>
         )}
       </header>

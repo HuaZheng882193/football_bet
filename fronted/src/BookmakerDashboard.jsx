@@ -308,6 +308,7 @@ export default function BookmakerDashboard() {
               <thead>
                 <tr style={{ borderBottom: "1px solid var(--border-divider)", color: "var(--text-tertiary)" }}>
                   <th style={{ padding: "12px 16px" }}>时间</th>
+                  <th style={{ padding: "12px 16px" }}>投注人</th>
                   <th style={{ padding: "12px 16px" }}>赛事</th>
                   <th style={{ padding: "12px 16px" }}>投注选择</th>
                   <th style={{ padding: "12px 16px", textAlign: "right" }}>投注额</th>
@@ -318,7 +319,7 @@ export default function BookmakerDashboard() {
               <tbody>
                 {settledRows.length === 0 ? (
                   <tr>
-                    <td colSpan="6" style={{ padding: "18px 16px", color: "var(--text-secondary)", textAlign: "center" }}>
+                    <td colSpan="7" style={{ padding: "18px 16px", color: "var(--text-secondary)", textAlign: "center" }}>
                       当前筛选条件下暂无已结算投注。
                     </td>
                   </tr>
@@ -326,6 +327,7 @@ export default function BookmakerDashboard() {
                   settledRows.map((bet) => (
                     <tr key={bet.id} style={{ borderBottom: "1px solid rgba(148, 163, 184, 0.08)" }}>
                       <td style={{ padding: "12px 16px", color: "var(--text-secondary)" }}>{formatDateTime(bet.settledAt || bet.time)}</td>
+                      <td style={{ padding: "12px 16px", color: "var(--text-primary)", fontWeight: 600 }}>{bet.bettor || "匿名"}</td>
                       <td style={{ padding: "12px 16px", color: "var(--text-primary)" }}>{bet.fixture || "--"}</td>
                       <td style={{ padding: "12px 16px", color: "var(--text-secondary)" }}>{bet.selection || "--"}</td>
                       <td style={{ padding: "12px 16px", textAlign: "right" }}>{formatCurrency(bet.stake)}</td>
