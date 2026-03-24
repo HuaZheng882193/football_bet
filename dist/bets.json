@@ -51,6 +51,23 @@
     "bettor": "孙",
     "stake": 200,
     "estimatedReturn": 410,
-    "status": "void"
+    "status": "lose",
+    "payout": 0.0,
+    "house_profit": 200.0,
+    "settled_at": "2026-03-24T15:40:10.797578+00:00"
+  },
+  {
+    "id": "bet_1774365099600",
+    "time": "2026-03-24T15:11:39.600Z",
+    "matchId": "e780e015b3982760d6ec9450a265b2b8",
+    "fixture": "深圳鹏城FC 对阵 武汉三镇",
+    "market": "标准盘",
+    "selection": "平",
+    "price": "3.5",
+    "bookmaker": "SportsBet",
+    "bettor": "sq",
+    "stake": 50,
+    "estimatedReturn": 175,
+    "status": "win"
   }
 ]

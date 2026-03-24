@@ -1,5 +1,6 @@
 import json
 import os
+from datetime import datetime, timezone
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from requests import HTTPError
@@ -21,6 +22,48 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+def _to_float(value, fallback=0.0):
+    try:
+        parsed = float(value)
+    except (TypeError, ValueError):
+        return fallback
+    return parsed
+
+
+def _round_money(value):
+    return round(float(value) + 1e-9, 2)
+
+
+def _apply_bet_settlement(bet: dict, status):
+    if status not in {None, "win", "lose", "void"}:
+        raise HTTPException(status_code=400, detail="Invalid status value")
+
+    if status is None:
+        bet["status"] = None
+        bet.pop("payout", None)
+        bet.pop("house_profit", None)
+        bet.pop("settled_at", None)
+        return
+
+    stake = _to_float(bet.get("stake"), 0.0)
+    price = _to_float(bet.get("price"), 0.0)
+
+    if status == "win":
+        payout = _round_money(stake * price)
+        house_profit = _round_money(stake - payout)
+    elif status == "lose":
+        payout = 0.0
+        house_profit = _round_money(stake)
+    else:  # status == "void"
+        payout = _round_money(stake)
+        house_profit = 0.0
+
+    bet["status"] = status
+    bet["payout"] = payout
+    bet["house_profit"] = house_profit
+    bet["settled_at"] = datetime.now(timezone.utc).isoformat()
 
 
 def get_client():
@@ -79,7 +122,12 @@ async def save_bet(request: Request):
                     bets = json.load(f)
                 except json.JSONDecodeError:
                     bets = []
-                    
+
+        data.setdefault("status", None)
+        data.pop("payout", None)
+        data.pop("house_profit", None)
+        data.pop("settled_at", None)
+
         bets.append(data)
         
         with open(filepath, "w", encoding="utf-8") as f:
@@ -118,9 +166,11 @@ async def settle_bet(request: Request):
             bets = json.load(f)
 
         updated = False
+        updated_bet = None
         for bet in bets:
             if bet.get("id") == bet_id:
-                bet["status"] = status
+                _apply_bet_settlement(bet, status)
+                updated_bet = bet
                 updated = True
                 break
 
@@ -130,8 +180,39 @@ async def settle_bet(request: Request):
         with open(filepath, "w", encoding="utf-8") as f:
             json.dump(bets, f, ensure_ascii=False, indent=2)
 
-        return {"status": "success", "message": "Bet settled successfully"}
+        return {
+            "status": "success",
+            "message": "Bet settled successfully",
+            "updated_bet": updated_bet,
+        }
     except HTTPException:
         raise
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+
+
+@app.post("/bets/clear")
+def clear_all_bets():
+    filepath = "bets.json"
+    cleared_count = 0
+
+    try:
+        if os.path.exists(filepath):
+            with open(filepath, "r", encoding="utf-8") as f:
+                try:
+                    bets = json.load(f)
+                    if isinstance(bets, list):
+                        cleared_count = len(bets)
+                except json.JSONDecodeError:
+                    cleared_count = 0
+
+        with open(filepath, "w", encoding="utf-8") as f:
+            json.dump([], f, ensure_ascii=False, indent=2)
+
+        return {
+            "status": "success",
+            "message": "All bets cleared successfully",
+            "cleared_count": cleared_count,
+        }
     except Exception as exc:
         raise HTTPException(status_code=500, detail=str(exc)) from exc
