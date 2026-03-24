@@ -10,7 +10,7 @@
     "bookmaker": "SportsBet",
     "stake": 200,
     "estimatedReturn": 344,
-    "status": "void"
+    "status": "lose"
   },
   {
     "id": "bet_1774357596224",

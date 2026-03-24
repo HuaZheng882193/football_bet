@@ -107,8 +107,8 @@ async def settle_bet(request: Request):
         bet_id = data.get("id")
         status = data.get("status")
 
-        if not bet_id or not status:
-            raise HTTPException(status_code=400, detail="Missing id or status")
+        if not bet_id or "status" not in data:
+            raise HTTPException(status_code=400, detail="Missing id or status key")
 
         filepath = "bets.json"
         if not os.path.exists(filepath):

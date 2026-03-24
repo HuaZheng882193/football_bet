@@ -94,14 +94,15 @@ export default function Admin() {
   }, [filteredBets]);
 
   async function handleSettle(betId, status) {
-    if (!window.confirm(`确定要将该笔订单结算为“${status === 'win' ? '赢' : status === 'lose' ? '输' : '走水'}”吗？`)) {
+    const statusText = status === 'win' ? '赢(红单)' : status === 'lose' ? '输(黑单)' : status === 'void' ? '走水' : '未结算';
+    if (!window.confirm(`确定要将该笔订单状态修改为“${statusText}”吗？`)) {
       return;
     }
     try {
       const response = await fetch(`${API_BASE_URL}/bets/settle`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: betId, status })
+        body: JSON.stringify({ id: betId, status: status === 'unsettled' ? null : status })
       });
       if (!response.ok) throw new Error("结算请求失败");
       
@@ -113,20 +114,31 @@ export default function Admin() {
   }
 
   function renderStatus(bet) {
-    if (bet.status === 'win') {
-      return <span style={{ color: '#10b981', fontWeight: 'bold' }}>赢 (红单)</span>;
+    const isSettled = bet.status && bet.status !== 'unsettled';
+    
+    if (isSettled) {
+      let content = null;
+      if (bet.status === 'win') {
+        content = <span style={{ color: '#10b981', fontWeight: 'bold' }}>赢 (红单)</span>;
+      } else if (bet.status === 'lose') {
+        content = <span style={{ color: '#ef4444', fontWeight: 'bold' }}>输 (黑单)</span>;
+      } else if (bet.status === 'void') {
+        content = <span style={{ color: 'var(--text-muted)' }}>走水/撤单</span>;
+      }
+
+      return (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          {content}
+          <button onClick={() => handleSettle(bet.id, 'unsettled')} style={{ padding: '2px 6px', fontSize: '11px', background: 'transparent', color: 'var(--text-tertiary)', borderRadius: '4px', border: '1px solid var(--border-divider)', cursor: 'pointer' }}>撤销结算</button>
+        </div>
+      );
     }
-    if (bet.status === 'lose') {
-      return <span style={{ color: '#ef4444', fontWeight: 'bold' }}>输 (黑单)</span>;
-    }
-    if (bet.status === 'void') {
-      return <span style={{ color: 'var(--text-muted)' }}>走水/撤单</span>;
-    }
+    
     return (
       <div style={{ display: 'flex', gap: '8px' }}>
-        <button onClick={() => handleSettle(bet.id, 'win')} style={{ padding: '4px 8px', fontSize: '12px', background: '#10b981', color: '#fff', borderRadius: '4px' }}>赢</button>
-        <button onClick={() => handleSettle(bet.id, 'lose')} style={{ padding: '4px 8px', fontSize: '12px', background: '#ef4444', color: '#fff', borderRadius: '4px' }}>输</button>
-        <button onClick={() => handleSettle(bet.id, 'void')} style={{ padding: '4px 8px', fontSize: '12px', background: 'var(--bg-inset)', color: 'var(--text-secondary)', borderRadius: '4px', border: '1px solid var(--border-divider)' }}>走水</button>
+        <button onClick={() => handleSettle(bet.id, 'win')} style={{ padding: '4px 8px', fontSize: '12px', background: '#10b981', color: '#fff', borderRadius: '4px', cursor: 'pointer' }}>结赢</button>
+        <button onClick={() => handleSettle(bet.id, 'lose')} style={{ padding: '4px 8px', fontSize: '12px', background: '#ef4444', color: '#fff', borderRadius: '4px', cursor: 'pointer' }}>结输</button>
+        <button onClick={() => handleSettle(bet.id, 'void')} style={{ padding: '4px 8px', fontSize: '12px', background: 'var(--bg-inset)', color: 'var(--text-secondary)', borderRadius: '4px', border: '1px solid var(--border-divider)', cursor: 'pointer' }}>走水</button>
       </div>
     );
   }
