@@ -1,0 +1,9 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: football-bet-frontend
+    ports:
+      - "8080:80"
+    restart: unless-stopped
