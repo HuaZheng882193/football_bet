@@ -402,7 +402,7 @@ function BetslipPanel({ bet, onClose }) {
         </div>
 
         <div className="betslip-stake">
-          <label htmlFor="bettor-input">投注人姓名</label>
+          <label htmlFor="bettor-input">投注人</label>
           <div className="stake-input-wrapper">
             <input
               id="bettor-input"
@@ -771,10 +771,10 @@ function App() {
               </div>
             </div>
 
-            <div className="filter-group">
+            {/* <div className="filter-group">
               <label>接口地址</label>
               <div className="info-card">{API_BASE_URL}</div>
-            </div>
+            </div> */}
           </aside>
 
           <section className="main-panel">

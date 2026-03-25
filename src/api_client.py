@@ -37,3 +37,19 @@ class OddsAPIClient:
                 "markets": markets,
             },
         )
+
+    def get_scores(self, sport="", days_from=1, date_format="iso", event_ids=None):
+        if not sport:
+            raise ValueError("sport is required")
+
+        params = {
+            "daysFrom": days_from,
+            "dateFormat": date_format,
+        }
+        if event_ids:
+            params["eventIds"] = event_ids
+
+        return self._get(
+            f"/sports/{sport}/scores",
+            params,
+        )

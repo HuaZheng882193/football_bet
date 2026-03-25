@@ -113,6 +113,10 @@ export default function Admin() {
         matchBettor ||
         matchStatus
       );
+    }).sort((left, right) => {
+      const leftTime = new Date(left.time || 0).getTime();
+      const rightTime = new Date(right.time || 0).getTime();
+      return rightTime - leftTime;
     });
   }, [bets, query, statusFilter]);
 
@@ -204,6 +208,28 @@ export default function Admin() {
     }
   }
 
+  async function handleCancelBet(betId) {
+    if (!window.confirm("确定要撤销这条投注记录吗？")) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/bets/cancel`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: betId }),
+      });
+      if (!response.ok) {
+        throw new Error("撤单请求失败");
+      }
+
+      setBets((prev) => prev.filter((bet) => bet.id !== betId));
+      invalidateCachedJsonByPrefix("bets:");
+    } catch (err) {
+      alert(`撤单失败: ${err.message}`);
+    }
+  }
+
   function renderStatus(bet) {
     const isSettled = bet.status && bet.status !== "unsettled";
 
@@ -283,6 +309,19 @@ export default function Admin() {
             cursor: "pointer",
           }}>
           走水
+        </button>
+        <button
+          onClick={() => handleCancelBet(bet.id)}
+          style={{
+            padding: "4px 8px",
+            fontSize: "12px",
+            background: "rgba(239, 68, 68, 0.12)",
+            color: "#fecaca",
+            borderRadius: "4px",
+            border: "1px solid rgba(239, 68, 68, 0.35)",
+            cursor: "pointer",
+          }}>
+          撤单
         </button>
       </div>
     );
