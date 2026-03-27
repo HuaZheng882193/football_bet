@@ -86,7 +86,11 @@ export default function Admin() {
       // 状态筛选
       if (statusFilter !== "all") {
         const betStatus = bet.status || "unsettled";
-        if (statusFilter !== betStatus) return false;
+        if (statusFilter === "settled") {
+          if (betStatus === "unsettled") return false;
+        } else {
+          if (statusFilter !== betStatus) return false;
+        }
       }
 
       // 关键词搜索
@@ -411,6 +415,7 @@ export default function Admin() {
             }}>
             <option value="all">全部状态</option>
             <option value="unsettled">未结算</option>
+            <option value="settled">已结算</option>
             <option value="win">赢 (红单)</option>
             <option value="lose">输 (黑单)</option>
             <option value="void">走水/撤单</option>
