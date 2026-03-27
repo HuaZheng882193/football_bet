@@ -172,8 +172,9 @@ def get_exact_score_bets(
 async def save_bet(request: Request):
     try:
         data = await request.json()
-        filepath = "bets.json"
-        
+        filepath = "data/bets.json"
+        os.makedirs("data", exist_ok=True)
+
         bets = []
         if os.path.exists(filepath):
             with open(filepath, "r", encoding="utf-8") as f:
@@ -199,7 +200,7 @@ async def save_bet(request: Request):
 
 @app.get("/bets")
 def get_all_bets():
-    filepath = "bets.json"
+    filepath = "data/bets.json"
     if not os.path.exists(filepath):
         return []
     try:
@@ -218,7 +219,7 @@ async def settle_bet(request: Request):
         if not bet_id or "status" not in data:
             raise HTTPException(status_code=400, detail="Missing id or status key")
 
-        filepath = "bets.json"
+        filepath = "data/bets.json"
         if not os.path.exists(filepath):
             raise HTTPException(status_code=404, detail="Bets file not found")
 
@@ -253,7 +254,7 @@ async def settle_bet(request: Request):
 
 @app.post("/score-bets/settle")
 def settle_exact_score_bets(daysFrom: int = Query(3, ge=1, le=7)):
-    filepath = "bets.json"
+    filepath = "data/bets.json"
     if not os.path.exists(filepath):
         return {"status": "success", "settled_count": 0, "message": "No bets file found"}
 
@@ -315,7 +316,7 @@ def settle_exact_score_bets(daysFrom: int = Query(3, ge=1, le=7)):
 
 @app.post("/bets/clear")
 def clear_all_bets():
-    filepath = "bets.json"
+    filepath = "data/bets.json"
     cleared_count = 0
 
     try:
@@ -342,7 +343,7 @@ def clear_all_bets():
 
 @app.post("/bets/cancel")
 async def cancel_bet(request: Request):
-    filepath = "bets.json"
+    filepath = "data/bets.json"
     try:
         body = await request.json()
         bet_id = body.get("id")

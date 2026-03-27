@@ -1,4 +1,18 @@
 services:
+  backend:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    container_name: football-bet-backend
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    volumes:
+      - bets_data:/app/data
+    environment:
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+
   frontend:
     build:
       context: .
@@ -7,3 +21,9 @@ services:
     ports:
       - "8080:80"
     restart: unless-stopped
+    depends_on:
+      - backend
+
+volumes:
+  bets_data:
+    driver: local

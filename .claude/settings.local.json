@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(pip install:*)",
-      "Bash(\"c:\\\\Users\\\\huazh\\\\Desktop\\\\Coding\\\\football_bet\\\\README.md\")"
+      "Bash(\"c:\\\\Users\\\\huazh\\\\Desktop\\\\Coding\\\\football_bet\\\\README.md\")",
+      "Bash(xargs grep:*)",
+      "Bash(docker compose:*)"
     ]
   }
 }

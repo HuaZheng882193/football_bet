@@ -29,7 +29,7 @@ def _default_cache_path():
     raw_path = os.getenv("TRANSLATION_CACHE_FILE")
     if raw_path:
         return Path(raw_path)
-    return Path.cwd() / "translation_cache.json"
+    return Path.cwd() / "data" / "translation_cache.json"
 
 
 class TranslationService:
