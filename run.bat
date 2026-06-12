@@ -1,5 +1,5 @@
 @echo off
-cd /d "C:\Users\huazh\Desktop\Coding\ClaudeCode\football-odds"
+cd /d "D:\Coding\football_bet"
 
 :start
 set sport_key=

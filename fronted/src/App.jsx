@@ -5,7 +5,7 @@ import { getCachedJson, invalidateCachedJsonByPrefix } from "./apiCache";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
-const DEFAULT_SPORT = "soccer_china_superleague";
+const DEFAULT_SPORT = "soccer_fifa_world_cup";
 const DEFAULT_MARKETS = "h2h,spreads,totals";
 const DEFAULT_REGIONS = "us,uk,au";
 const SPORTS_CACHE_KEY = "sports:list";

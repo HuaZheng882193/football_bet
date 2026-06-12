@@ -3,7 +3,7 @@ import Admin from "./Admin";
 import BookmakerDashboard from "./BookmakerDashboard";
 import { getCachedJson, invalidateCachedJsonByPrefix } from "./apiCache";
 
-const DEFAULT_SPORT = "soccer_china_superleague";
+const DEFAULT_SPORT = "soccer_fifa_world_cup";
 const DEFAULT_REGIONS = "us,uk,au";
 const SPORTS_CACHE_KEY = "sports:list";
 const CACHE_TTL_SPORTS_MS = 5 * 60_000;

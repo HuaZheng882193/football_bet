@@ -503,6 +503,14 @@ export default function Admin() {
                     fontWeight: "600",
                     textAlign: "right",
                   }}>
+                  预计返回
+                </th>
+                <th
+                  style={{
+                    padding: "16px",
+                    fontWeight: "600",
+                    textAlign: "right",
+                  }}>
                   赔付金额
                 </th>
                 <th
@@ -522,7 +530,7 @@ export default function Admin() {
               {enrichedFilteredBets.length === 0 ? (
                 <tr>
                   <td
-                    colSpan="10"
+                    colSpan="11"
                     style={{
                       padding: "24px",
                       textAlign: "center",
@@ -600,6 +608,15 @@ export default function Admin() {
                         fontWeight: "600",
                       }}>
                       {formatCurrency(bet.stake)}
+                    </td>
+                    <td
+                      style={{
+                        padding: "16px",
+                        textAlign: "right",
+                        color: "#10b981",
+                        fontWeight: "600",
+                      }}>
+                      {formatCurrency((bet.stake || 0) * (bet.price || 0))}
                     </td>
                     <td
                       style={{
