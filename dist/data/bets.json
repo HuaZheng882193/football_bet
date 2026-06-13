@@ -14,7 +14,10 @@
     "bettor": "毛总",
     "stake": 10,
     "estimatedReturn": 90,
-    "status": null
+    "status": "lose",
+    "payout": 0.0,
+    "house_profit": 10.0,
+    "settled_at": "2026-06-13T01:53:54.019674+00:00"
   },
   {
     "id": "score_bet_1781246507999",
@@ -31,7 +34,10 @@
     "bettor": "毛总",
     "stake": 10,
     "estimatedReturn": 65,
-    "status": null
+    "status": "lose",
+    "payout": 0.0,
+    "house_profit": 10.0,
+    "settled_at": "2026-06-13T01:34:24.264351+00:00"
   },
   {
     "id": "score_bet_1781248861394",
@@ -48,7 +54,10 @@
     "bettor": "孙总",
     "stake": 10,
     "estimatedReturn": 90,
-    "status": null
+    "status": "lose",
+    "payout": 0.0,
+    "house_profit": 10.0,
+    "settled_at": "2026-06-13T01:53:52.079269+00:00"
   },
   {
     "id": "score_bet_1781248876419",
@@ -65,7 +74,10 @@
     "bettor": "孙总",
     "stake": 10,
     "estimatedReturn": 95,
-    "status": null
+    "status": "lose",
+    "payout": 0.0,
+    "house_profit": 10.0,
+    "settled_at": "2026-06-13T01:53:50.080331+00:00"
   },
   {
     "id": "score_bet_1781248992161",
@@ -82,7 +94,10 @@
     "bettor": "樊总",
     "stake": 10,
     "estimatedReturn": 95,
-    "status": null
+    "status": "lose",
+    "payout": 0.0,
+    "house_profit": 10.0,
+    "settled_at": "2026-06-13T01:53:48.498444+00:00"
   },
   {
     "id": "score_bet_1781249015434",
@@ -99,6 +114,128 @@
     "bettor": "樊总",
     "stake": 10,
     "estimatedReturn": 65,
+    "status": "lose",
+    "payout": 0.0,
+    "house_profit": 10.0,
+    "settled_at": "2026-06-13T01:34:15.366193+00:00"
+  },
+  {
+    "id": "score_bet_1781317595440",
+    "bet_type": "correct_score",
+    "time": "2026-06-13T02:26:35.440Z",
+    "matchId": "564084f52cc9f1abcc18187c168a7cdc",
+    "fixture": "澳大利亚 vs 土耳其",
+    "league": "国际足联世界杯",
+    "sport_key": "soccer_fifa_world_cup",
+    "market": "精确比分",
+    "selection": "0:2",
+    "price": 8,
+    "bookmaker": "Score Engine",
+    "bettor": "孙总",
+    "stake": 10,
+    "estimatedReturn": 80,
+    "status": null
+  },
+  {
+    "id": "score_bet_1781317634210",
+    "bet_type": "correct_score",
+    "time": "2026-06-13T02:27:14.210Z",
+    "matchId": "564084f52cc9f1abcc18187c168a7cdc",
+    "fixture": "澳大利亚 vs 土耳其",
+    "league": "国际足联世界杯",
+    "sport_key": "soccer_fifa_world_cup",
+    "market": "精确比分",
+    "selection": "1:2",
+    "price": 9,
+    "bookmaker": "Score Engine",
+    "bettor": "孙总",
+    "stake": 10,
+    "estimatedReturn": 90,
+    "status": null
+  },
+  {
+    "id": "score_bet_1781326681471",
+    "bet_type": "correct_score",
+    "time": "2026-06-13T04:58:01.471Z",
+    "matchId": "f6c8748a16516e0998f95de14235432a",
+    "fixture": "巴西 vs 摩洛哥",
+    "league": "国际足联世界杯",
+    "sport_key": "soccer_fifa_world_cup",
+    "market": "精确比分",
+    "selection": "1:0",
+    "price": 6.5,
+    "bookmaker": "Score Engine",
+    "bettor": "毛总",
+    "stake": 10,
+    "estimatedReturn": 65,
+    "status": null
+  },
+  {
+    "id": "score_bet_1781326698113",
+    "bet_type": "correct_score",
+    "time": "2026-06-13T04:58:18.113Z",
+    "matchId": "f6c8748a16516e0998f95de14235432a",
+    "fixture": "巴西 vs 摩洛哥",
+    "league": "国际足联世界杯",
+    "sport_key": "soccer_fifa_world_cup",
+    "market": "精确比分",
+    "selection": "1:1",
+    "price": 7.5,
+    "bookmaker": "Score Engine",
+    "bettor": "毛总",
+    "stake": 10,
+    "estimatedReturn": 75,
+    "status": null
+  },
+  {
+    "id": "score_bet_1781333148467",
+    "bet_type": "correct_score",
+    "time": "2026-06-13T06:45:48.467Z",
+    "matchId": "f6c8748a16516e0998f95de14235432a",
+    "fixture": "巴西 vs 摩洛哥",
+    "league": "国际足联世界杯",
+    "sport_key": "soccer_fifa_world_cup",
+    "market": "精确比分",
+    "selection": "1:0",
+    "price": 6.5,
+    "bookmaker": "Score Engine",
+    "bettor": "樊总",
+    "stake": 10,
+    "estimatedReturn": 65,
+    "status": null
+  },
+  {
+    "id": "score_bet_1781333166834",
+    "bet_type": "correct_score",
+    "time": "2026-06-13T06:46:06.834Z",
+    "matchId": "f6c8748a16516e0998f95de14235432a",
+    "fixture": "巴西 vs 摩洛哥",
+    "league": "国际足联世界杯",
+    "sport_key": "soccer_fifa_world_cup",
+    "market": "精确比分",
+    "selection": "2:1",
+    "price": 9,
+    "bookmaker": "Score Engine",
+    "bettor": "樊总",
+    "stake": 10,
+    "estimatedReturn": 90,
+    "status": null
+  },
+  {
+    "id": "score_bet_1781333192319",
+    "bet_type": "correct_score",
+    "time": "2026-06-13T06:46:32.319Z",
+    "matchId": "f6c8748a16516e0998f95de14235432a",
+    "fixture": "巴西 vs 摩洛哥",
+    "league": "国际足联世界杯",
+    "sport_key": "soccer_fifa_world_cup",
+    "market": "精确比分",
+    "selection": "2:1",
+    "price": 9,
+    "bookmaker": "Score Engine",
+    "bettor": "楠总",
+    "stake": 10,
+    "estimatedReturn": 90,
     "status": null
   }
 ]

@@ -82,15 +82,107 @@ export function filterBetsByRecentDays(bets, days) {
   });
 }
 
+function parseScore(selection) {
+  if (typeof selection !== "string") return null;
+  const parts = selection.split(":");
+  if (parts.length !== 2) return null;
+  const h = parseInt(parts[0], 10);
+  const a = parseInt(parts[1], 10);
+  if (Number.isNaN(h) || Number.isNaN(a)) return null;
+  return { h, a };
+}
+
+function calculateMaxMatchPayout(matchBets) {
+  if (!matchBets || matchBets.length === 0) return 0;
+
+  const correctScoreBets = [];
+  const standardBets = [];
+  const spreadsBets = [];
+  const totalsBets = [];
+
+  matchBets.forEach((bet) => {
+    const market = bet.market || "";
+    const payout = toNumber(bet.stake, 0) * toNumber(bet.price, 0);
+
+    if (market === "精确比分") {
+      correctScoreBets.push({ ...bet, payout });
+    } else if (market === "标准盘") {
+      standardBets.push({ ...bet, payout });
+    } else if (market === "让球") {
+      spreadsBets.push({ ...bet, payout });
+    } else if (market === "进球数") {
+      totalsBets.push({ ...bet, payout });
+    } else {
+      standardBets.push({ ...bet, payout });
+    }
+  });
+
+  const getStandardSum = (sel) =>
+    standardBets
+      .filter((b) => b.selection === sel)
+      .reduce((sum, b) => sum + b.payout, 0);
+
+  const getSpreadsSum = (sel) =>
+    spreadsBets
+      .filter((b) => b.selection === sel)
+      .reduce((sum, b) => sum + b.payout, 0);
+
+  const getCorrectScoreMax = (conditionFn) => {
+    const scoreGroups = {};
+    let unparsedSum = 0;
+    correctScoreBets.forEach((b) => {
+      const score = parseScore(b.selection);
+      if (score) {
+        if (conditionFn(score.h, score.a)) {
+          scoreGroups[b.selection] = (scoreGroups[b.selection] || 0) + b.payout;
+        }
+      } else {
+        unparsedSum += b.payout;
+      }
+    });
+    const groupSums = Object.values(scoreGroups);
+    return (groupSums.length > 0 ? Math.max(...groupSums) : 0) + unparsedSum;
+  };
+
+  const totalsOverSum = totalsBets
+    .filter((b) => b.selection === "高于")
+    .reduce((sum, b) => sum + b.payout, 0);
+  const totalsUnderSum = totalsBets
+    .filter((b) => b.selection === "低于")
+    .reduce((sum, b) => sum + b.payout, 0);
+  const maxTotalsPayout = Math.max(totalsOverSum, totalsUnderSum);
+
+  const payoutHomeWin =
+    getCorrectScoreMax((h, a) => h > a) +
+    getStandardSum("胜") +
+    getSpreadsSum("胜") +
+    maxTotalsPayout;
+
+  const payoutDraw =
+    getCorrectScoreMax((h, a) => h === a) +
+    getStandardSum("平") +
+    Math.max(getSpreadsSum("胜"), getSpreadsSum("负")) +
+    maxTotalsPayout;
+
+  const payoutAwayWin =
+    getCorrectScoreMax((h, a) => h < a) +
+    getStandardSum("负") +
+    getSpreadsSum("负") +
+    maxTotalsPayout;
+
+  return Math.max(payoutHomeWin, payoutDraw, payoutAwayWin);
+}
+
 export function buildBookmakerSummary(bets) {
   let totalStake = 0;
   let settledStake = 0;
   let totalPayout = 0;
   let realizedProfit = 0;
   let unsettledStake = 0;
-  let potentialMaxLoss = 0;
   let settledCount = 0;
   let unsettledCount = 0;
+  const unsettledBetsByMatch = {};
+  let unknownMatchCounter = 0;
 
   bets.forEach((bet) => {
     totalStake += bet.stake;
@@ -98,7 +190,11 @@ export function buildBookmakerSummary(bets) {
     if (bet.status === "unsettled") {
       unsettledCount += 1;
       unsettledStake += bet.stake;
-      potentialMaxLoss += bet.potentialLiability;
+      const matchKey = bet.matchId || bet.fixture || `unknown_match_${unknownMatchCounter++}`;
+      if (!unsettledBetsByMatch[matchKey]) {
+        unsettledBetsByMatch[matchKey] = [];
+      }
+      unsettledBetsByMatch[matchKey].push(bet);
       return;
     }
 
@@ -106,6 +202,13 @@ export function buildBookmakerSummary(bets) {
     settledStake += bet.stake;
     totalPayout += toNumber(bet.payout, 0);
     realizedProfit += toNumber(bet.houseProfit, 0);
+  });
+
+  let overallWorstProfit = 0;
+  Object.values(unsettledBetsByMatch).forEach((matchBets) => {
+    const matchStake = matchBets.reduce((sum, b) => sum + toNumber(b.stake, 0), 0);
+    const maxPayout = calculateMaxMatchPayout(matchBets);
+    overallWorstProfit += (matchStake - maxPayout);
   });
 
   const settlementRate =
@@ -124,7 +227,7 @@ export function buildBookmakerSummary(bets) {
     unsettledCount,
     settlementRate,
     potentialMaxProfit: roundMoney(unsettledStake),
-    potentialMaxLoss: roundMoney(-potentialMaxLoss)
+    potentialMaxLoss: roundMoney(Math.min(0, overallWorstProfit))
   };
 }
 
