@@ -134,7 +134,10 @@
     "bettor": "孙总",
     "stake": 10,
     "estimatedReturn": 80,
-    "status": null
+    "status": "lose",
+    "payout": 0.0,
+    "house_profit": 10.0,
+    "settled_at": "2026-06-14T04:44:11.026270+00:00"
   },
   {
     "id": "score_bet_1781317634210",
@@ -151,7 +154,10 @@
     "bettor": "孙总",
     "stake": 10,
     "estimatedReturn": 90,
-    "status": null
+    "status": "lose",
+    "payout": 0.0,
+    "house_profit": 10.0,
+    "settled_at": "2026-06-14T05:36:13.366273+00:00"
   },
   {
     "id": "score_bet_1781326681471",
@@ -168,7 +174,10 @@
     "bettor": "毛总",
     "stake": 10,
     "estimatedReturn": 65,
-    "status": null
+    "status": "lose",
+    "payout": 0.0,
+    "house_profit": 10.0,
+    "settled_at": "2026-06-13T22:27:41.524613+00:00"
   },
   {
     "id": "score_bet_1781326698113",
@@ -185,7 +194,10 @@
     "bettor": "毛总",
     "stake": 10,
     "estimatedReturn": 75,
-    "status": null
+    "status": "win",
+    "payout": 75.0,
+    "house_profit": -65.0,
+    "settled_at": "2026-06-14T00:06:55.315940+00:00"
   },
   {
     "id": "score_bet_1781333148467",
@@ -202,7 +214,10 @@
     "bettor": "樊总",
     "stake": 10,
     "estimatedReturn": 65,
-    "status": null
+    "status": "lose",
+    "payout": 0.0,
+    "house_profit": 10.0,
+    "settled_at": "2026-06-13T22:27:49.913980+00:00"
   },
   {
     "id": "score_bet_1781333166834",
@@ -219,7 +234,10 @@
     "bettor": "樊总",
     "stake": 10,
     "estimatedReturn": 90,
-    "status": null
+    "status": "lose",
+    "payout": 0.0,
+    "house_profit": 10.0,
+    "settled_at": "2026-06-14T00:06:30.768643+00:00"
   },
   {
     "id": "score_bet_1781333192319",
@@ -236,6 +254,117 @@
     "bettor": "楠总",
     "stake": 10,
     "estimatedReturn": 90,
+    "status": "lose",
+    "payout": 0.0,
+    "house_profit": 10.0,
+    "settled_at": "2026-06-14T00:06:27.318275+00:00"
+  },
+  {
+    "id": "score_bet_1781412198515",
+    "bet_type": "correct_score",
+    "time": "2026-06-14T04:43:18.515Z",
+    "matchId": "564084f52cc9f1abcc18187c168a7cdc",
+    "fixture": "澳大利亚 vs 土耳其",
+    "league": "国际足联世界杯",
+    "sport_key": "soccer_fifa_world_cup",
+    "market": "精确比分",
+    "selection": "1:1",
+    "price": 7.5,
+    "bookmaker": "Score Engine",
+    "bettor": "毛总",
+    "stake": 10,
+    "estimatedReturn": 75,
+    "status": "lose",
+    "payout": 0.0,
+    "house_profit": 10.0,
+    "settled_at": "2026-06-14T05:36:11.661990+00:00"
+  },
+  {
+    "id": "score_bet_1781412214988",
+    "bet_type": "correct_score",
+    "time": "2026-06-14T04:43:34.988Z",
+    "matchId": "564084f52cc9f1abcc18187c168a7cdc",
+    "fixture": "澳大利亚 vs 土耳其",
+    "league": "国际足联世界杯",
+    "sport_key": "soccer_fifa_world_cup",
+    "market": "精确比分",
+    "selection": "1:2",
+    "price": 9,
+    "bookmaker": "Score Engine",
+    "bettor": "毛总",
+    "stake": 10,
+    "estimatedReturn": 90,
+    "status": "lose",
+    "payout": 0.0,
+    "house_profit": 10.0,
+    "settled_at": "2026-06-14T05:36:09.949206+00:00"
+  },
+  {
+    "id": "score_bet_1781415928040",
+    "bet_type": "correct_score",
+    "time": "2026-06-14T05:45:28.040Z",
+    "matchId": "32ec06abda2398ac41501c86eb9aa376",
+    "fixture": "荷兰 vs 日本",
+    "league": "国际足联世界杯",
+    "sport_key": "soccer_fifa_world_cup",
+    "market": "精确比分",
+    "selection": "1:1",
+    "price": 6.5,
+    "bookmaker": "Score Engine",
+    "bettor": "孙总",
+    "stake": 10,
+    "estimatedReturn": 65,
+    "status": null
+  },
+  {
+    "id": "score_bet_1781415943300",
+    "bet_type": "correct_score",
+    "time": "2026-06-14T05:45:43.300Z",
+    "matchId": "32ec06abda2398ac41501c86eb9aa376",
+    "fixture": "荷兰 vs 日本",
+    "league": "国际足联世界杯",
+    "sport_key": "soccer_fifa_world_cup",
+    "market": "精确比分",
+    "selection": "2:1",
+    "price": 9.5,
+    "bookmaker": "Score Engine",
+    "bettor": "孙总",
+    "stake": 10,
+    "estimatedReturn": 95,
+    "status": null
+  },
+  {
+    "id": "score_bet_1781416380137",
+    "bet_type": "correct_score",
+    "time": "2026-06-14T05:53:00.137Z",
+    "matchId": "32ec06abda2398ac41501c86eb9aa376",
+    "fixture": "荷兰 vs 日本",
+    "league": "国际足联世界杯",
+    "sport_key": "soccer_fifa_world_cup",
+    "market": "精确比分",
+    "selection": "2:1",
+    "price": 9.5,
+    "bookmaker": "Score Engine",
+    "bettor": "毛总",
+    "stake": 10,
+    "estimatedReturn": 95,
+    "status": null
+  },
+  {
+    "id": "score_bet_1781416396317",
+    "bet_type": "correct_score",
+    "time": "2026-06-14T05:53:16.317Z",
+    "matchId": "32ec06abda2398ac41501c86eb9aa376",
+    "fixture": "荷兰 vs 日本",
+    "league": "国际足联世界杯",
+    "sport_key": "soccer_fifa_world_cup",
+    "market": "精确比分",
+    "selection": "1:2",
+    "price": 13,
+    "bookmaker": "Score Engine",
+    "bettor": "毛总",
+    "stake": 10,
+    "estimatedReturn": 130,
     "status": null
   }
 ]

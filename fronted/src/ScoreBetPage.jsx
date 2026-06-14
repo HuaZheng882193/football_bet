@@ -150,7 +150,7 @@ function ScoreBetSlip({ apiBaseUrl, bet, onClose, onSuccess }) {
   const effectivePrice =
     Number.isFinite(parsedPrice) && parsedPrice > 0 ? parsedPrice : 0;
   const returnAmount = stake
-    ? (parseFloat(stake || 0) * effectivePrice).toFixed(2)
+    ? (Math.floor(parseFloat(stake || 0) * effectivePrice) / 2).toFixed(2)
     : "0.00";
 
   async function handleSubmit() {

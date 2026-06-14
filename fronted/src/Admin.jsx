@@ -616,7 +616,7 @@ export default function Admin() {
                         color: "#10b981",
                         fontWeight: "600",
                       }}>
-                      {formatCurrency((bet.stake || 0) * (bet.price || 0))}
+                      {formatCurrency(bet.estimatedReturn)}
                     </td>
                     <td
                       style={{
