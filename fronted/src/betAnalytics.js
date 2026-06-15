@@ -102,7 +102,7 @@ function calculateMaxMatchPayout(matchBets) {
 
   matchBets.forEach((bet) => {
     const market = bet.market || "";
-    const payout = toNumber(bet.stake, 0) * toNumber(bet.price, 0);
+    const payout = (toNumber(bet.stake, 0) * toNumber(bet.price, 0)) / 2;
 
     if (market === "精确比分") {
       correctScoreBets.push({ ...bet, payout });

@@ -314,7 +314,10 @@
     "bettor": "孙总",
     "stake": 10,
     "estimatedReturn": 65,
-    "status": null
+    "status": "lose",
+    "payout": 0.0,
+    "house_profit": 10.0,
+    "settled_at": "2026-06-14T21:23:31.605615+00:00"
   },
   {
     "id": "score_bet_1781415943300",
@@ -331,7 +334,10 @@
     "bettor": "孙总",
     "stake": 10,
     "estimatedReturn": 95,
-    "status": null
+    "status": "lose",
+    "payout": 0.0,
+    "house_profit": 10.0,
+    "settled_at": "2026-06-14T21:48:22.046187+00:00"
   },
   {
     "id": "score_bet_1781416380137",
@@ -348,7 +354,10 @@
     "bettor": "毛总",
     "stake": 10,
     "estimatedReturn": 95,
-    "status": null
+    "status": "lose",
+    "payout": 0.0,
+    "house_profit": 10.0,
+    "settled_at": "2026-06-14T21:48:20.346516+00:00"
   },
   {
     "id": "score_bet_1781416396317",
@@ -365,6 +374,63 @@
     "bettor": "毛总",
     "stake": 10,
     "estimatedReturn": 130,
+    "status": "lose",
+    "payout": 0.0,
+    "house_profit": 10.0,
+    "settled_at": "2026-06-14T21:23:37.786861+00:00"
+  },
+  {
+    "id": "score_bet_1781485753400",
+    "bet_type": "correct_score",
+    "time": "2026-06-15T01:09:13.400Z",
+    "matchId": "b55f9569de3f4d731bc5537ff5ff43e4",
+    "fixture": "瑞典 vs 突尼斯",
+    "league": "国际足联世界杯",
+    "sport_key": "soccer_fifa_world_cup",
+    "market": "精确比分",
+    "selection": "1:0",
+    "price": 6.5,
+    "bookmaker": "Score Engine",
+    "bettor": "孙总",
+    "stake": 10,
+    "estimatedReturn": 32.5,
+    "status": "lose",
+    "payout": 0.0,
+    "house_profit": 10.0,
+    "settled_at": "2026-06-15T02:39:53.031540+00:00"
+  },
+  {
+    "id": "score_bet_1781517224421",
+    "bet_type": "correct_score",
+    "time": "2026-06-15T09:53:44.421Z",
+    "matchId": "64b91c5f2db61c7358a4f05459e83c52",
+    "fixture": "沙特阿拉伯 vs 乌拉圭",
+    "league": "国际足联世界杯",
+    "sport_key": "soccer_fifa_world_cup",
+    "market": "精确比分",
+    "selection": "0:2",
+    "price": 6,
+    "bookmaker": "Score Engine",
+    "bettor": "孙总",
+    "stake": 20,
+    "estimatedReturn": 60,
+    "status": null
+  },
+  {
+    "id": "score_bet_1781517260411",
+    "bet_type": "correct_score",
+    "time": "2026-06-15T09:54:20.411Z",
+    "matchId": "64b91c5f2db61c7358a4f05459e83c52",
+    "fixture": "沙特阿拉伯 vs 乌拉圭",
+    "league": "国际足联世界杯",
+    "sport_key": "soccer_fifa_world_cup",
+    "market": "精确比分",
+    "selection": "0:1",
+    "price": 6,
+    "bookmaker": "Score Engine",
+    "bettor": "毛总",
+    "stake": 10,
+    "estimatedReturn": 30,
     "status": null
   }
 ]

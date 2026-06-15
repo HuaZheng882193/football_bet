@@ -110,6 +110,259 @@ function TrendChart({ data }) {
   );
 }
 
+function BettorShareChart({ bets, type = "stake" }) {
+  const [hoveredIdx, setHoveredIdx] = useState(null);
+
+  const { items, total } = useMemo(() => {
+    const map = {};
+    let totalValue = 0;
+    bets.forEach((bet) => {
+      const bettor = bet.bettor || "匿名";
+      let val = 0;
+      if (type === "stake") {
+        val = bet.stake || 0;
+      } else if (type === "win") {
+        if (bet.status === "win") {
+          val = bet.payout || 0;
+        }
+      }
+      
+      if (val > 0) {
+        map[bettor] = (map[bettor] || 0) + val;
+        totalValue += val;
+      }
+    });
+
+    const sortedBettors = Object.entries(map)
+      .map(([name, val]) => ({ name, stake: val }))
+      .sort((a, b) => b.stake - a.stake);
+
+    let list = [];
+    if (sortedBettors.length <= 6) {
+      list = sortedBettors.map((item) => ({
+        ...item,
+        percentage: totalValue > 0 ? (item.stake / totalValue) * 100 : 0
+      }));
+    } else {
+      const top = sortedBettors.slice(0, 5);
+      const rest = sortedBettors.slice(5);
+      const restStake = rest.reduce((sum, item) => sum + item.stake, 0);
+
+      list = top.map((item) => ({
+        ...item,
+        percentage: totalValue > 0 ? (item.stake / totalValue) * 100 : 0
+      }));
+
+      if (restStake > 0) {
+        list.push({
+          name: "其他",
+          stake: restStake,
+          percentage: totalValue > 0 ? (restStake / totalValue) * 100 : 0
+        });
+      }
+    }
+
+    const colors = [
+      "#8b5cf6", // Purple
+      "#06b6d4", // Cyan
+      "#10b981", // Emerald
+      "#f59e0b", // Amber
+      "#f43f5e", // Rose
+      "#6366f1"  // Indigo
+    ];
+
+    return {
+      items: list.map((item, idx) => ({
+        ...item,
+        color: colors[idx % colors.length]
+      })),
+      total: totalValue
+    };
+  }, [bets, type]);
+
+  const title = type === "stake" ? "投注人金额占比" : "投注人赢单金额占比";
+  const emptyText = type === "stake" ? "暂无投注金额占比数据" : "暂无赢单金额占比数据";
+  const centerLabel = type === "stake" ? "总投注额" : "总赢单金额";
+
+  if (total === 0) {
+    return (
+      <div
+        style={{
+          border: "1px solid var(--border-divider)",
+          borderRadius: "12px",
+          background: "var(--bg-card-strong)",
+          padding: "20px",
+          textAlign: "center",
+          color: "var(--text-secondary)",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          minHeight: "220px"
+        }}
+      >
+        {emptyText}
+      </div>
+    );
+  }
+
+  // SVG Circle calculations
+  const radius = 70;
+  const strokeWidth = 16;
+  const circumference = 2 * Math.PI * radius; // ~439.82
+  
+  let accumulatedPercentage = 0;
+
+  const activeItem = hoveredIdx !== null ? items[hoveredIdx] : null;
+
+  return (
+    <div
+      style={{
+        border: "1px solid var(--border-divider)",
+        borderRadius: "12px",
+        background: "var(--bg-card-strong)",
+        padding: "20px",
+        display: "flex",
+        flexDirection: "column",
+        gap: "16px",
+        height: "100%"
+      }}
+    >
+      <div style={{ color: "var(--text-secondary)", fontSize: "14px", fontWeight: 600 }}>
+        {title}
+      </div>
+      
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "24px",
+          alignItems: "center",
+          justifyContent: "space-around"
+        }}
+      >
+        {/* Left: SVG Donut Chart */}
+        <div style={{ position: "relative", width: "220px", height: "220px", flexShrink: 0 }}>
+          <svg width="220" height="220" viewBox="0 0 220 220">
+            <g transform="rotate(-90 110 110)">
+              {/* Background track circle */}
+              <circle
+                cx="110"
+                cy="110"
+                r={radius}
+                fill="none"
+                stroke="rgba(255, 255, 255, 0.05)"
+                strokeWidth={strokeWidth}
+              />
+              
+              {items.map((item, idx) => {
+                const strokeLength = (item.percentage / 100) * circumference;
+                const spaceLength = circumference - strokeLength;
+                const offset = (accumulatedPercentage / 100) * circumference;
+                accumulatedPercentage += item.percentage;
+
+                const isHovered = hoveredIdx === idx;
+
+                return (
+                  <circle
+                    key={item.name}
+                    cx="110"
+                    cy="110"
+                    r={radius}
+                    fill="none"
+                    stroke={item.color}
+                    strokeWidth={isHovered ? strokeWidth + 4 : strokeWidth}
+                    strokeDasharray={`${strokeLength} ${spaceLength}`}
+                    strokeDashoffset={-offset}
+                    strokeLinecap="butt"
+                    onMouseEnter={() => setHoveredIdx(idx)}
+                    onMouseLeave={() => setHoveredIdx(null)}
+                    style={{
+                      transition: "stroke-width 0.2s ease, filter 0.2s ease",
+                      cursor: "pointer",
+                      filter: isHovered ? "drop-shadow(0 0 4px rgba(255,255,255,0.2))" : "none"
+                    }}
+                  />
+                );
+              })}
+            </g>
+            
+            {/* Center Text */}
+            <text x="110" y="100" textAnchor="middle" fill="var(--text-secondary)" fontSize="13px" fontWeight="500">
+              {activeItem ? activeItem.name : centerLabel}
+            </text>
+            <text x="110" y="124" textAnchor="middle" fill="var(--text-primary)" fontSize="18px" fontWeight="700">
+              {activeItem ? formatCurrency(activeItem.stake) : formatCurrency(total)}
+            </text>
+            <text x="110" y="144" textAnchor="middle" fill="var(--text-tertiary)" fontSize="12px">
+              {activeItem ? `${activeItem.percentage.toFixed(1)}%` : "100.0%"}
+            </text>
+          </svg>
+        </div>
+
+        {/* Right: Legend Breakdown */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "10px", flex: 1, minWidth: "200px" }}>
+          {items.map((item, idx) => {
+            const isHovered = hoveredIdx === idx;
+            return (
+              <div
+                key={item.name}
+                onMouseEnter={() => setHoveredIdx(idx)}
+                onMouseLeave={() => setHoveredIdx(null)}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "6px",
+                  padding: "8px 12px",
+                  borderRadius: "8px",
+                  background: isHovered ? "rgba(255, 255, 255, 0.04)" : "transparent",
+                  transition: "background 0.2s ease",
+                  cursor: "pointer"
+                }}
+              >
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: "14px" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: 600 }}>
+                    <span
+                      style={{
+                        display: "inline-block",
+                        width: "10px",
+                        height: "10px",
+                        borderRadius: "50%",
+                        background: item.color,
+                        boxShadow: isHovered ? `0 0 6px ${item.color}` : "none",
+                        transition: "box-shadow 0.2s ease"
+                      }}
+                    />
+                    <span style={{ color: "var(--text-primary)" }}>{item.name}</span>
+                  </div>
+                  <div style={{ fontWeight: 700, color: "var(--text-primary)" }}>
+                    {formatCurrency(item.stake)}
+                    <span style={{ color: "var(--text-tertiary)", fontSize: "12px", fontWeight: 500, marginLeft: "8px" }}>
+                      {item.percentage.toFixed(1)}%
+                    </span>
+                  </div>
+                </div>
+                {/* Progress Bar */}
+                <div style={{ width: "100%", height: "6px", background: "rgba(255, 255, 255, 0.06)", borderRadius: "3px", overflow: "hidden" }}>
+                  <div
+                    style={{
+                      width: `${item.percentage}%`,
+                      height: "100%",
+                      background: item.color,
+                      borderRadius: "3px",
+                      transition: "width 0.4s ease-out"
+                    }}
+                  />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function BookmakerDashboard() {
   const [bets, setBets] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -299,6 +552,11 @@ export default function BookmakerDashboard() {
           </div>
 
           <TrendChart data={trendSeries} />
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))", gap: "16px", marginTop: "16px" }}>
+            <BettorShareChart bets={filteredBets} type="stake" />
+            <BettorShareChart bets={filteredBets} type="win" />
+          </div>
 
           <div style={{ marginTop: "16px", border: "1px solid var(--border-divider)", borderRadius: "12px", background: "var(--bg-card-strong)", overflowX: "auto" }}>
             <div style={{ padding: "14px 16px", borderBottom: "1px solid var(--border-divider)", color: "var(--text-secondary)" }}>
