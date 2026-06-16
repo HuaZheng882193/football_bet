@@ -89,15 +89,15 @@ function TrendChart({ data }) {
 
   return (
     <div
-      style={{
-        border: "1px solid var(--border-divider)",
-        borderRadius: "12px",
-        background: "var(--bg-card-strong)",
-        padding: "12px",
-        overflowX: "auto"
-      }}
+    // style={{
+    //   border: "1px solid var(--border-divider)",
+    //   borderRadius: "12px",
+    //   background: "var(--bg-card-strong)",
+    //   padding: "12px",
+    //   overflowX: "auto"
+    // }}
     >
-      <svg width={width} height={height} role="img" aria-label="盈亏趋势图">
+      {/* <svg width={width} height={height} role="img" aria-label="盈亏趋势图">
         <line x1={padding} y1={zeroY} x2={width - padding} y2={zeroY} stroke="rgba(148,163,184,0.35)" strokeDasharray="4 4" />
         <path d={buildPath("dailyProfit")} fill="none" stroke="#22c55e" strokeWidth="2.5" />
         <path d={buildPath("cumulativeProfit")} fill="none" stroke="#38bdf8" strokeWidth="2.5" />
@@ -105,7 +105,7 @@ function TrendChart({ data }) {
       <div style={{ display: "flex", gap: "16px", padding: "0 8px 8px", color: "var(--text-secondary)", fontSize: "13px" }}>
         <span><strong style={{ color: "#22c55e" }}>当日</strong>已实现盈亏</span>
         <span><strong style={{ color: "#38bdf8" }}>累计</strong>已实现盈亏</span>
-      </div>
+      </div> */}
     </div>
   );
 }
@@ -126,7 +126,7 @@ function BettorShareChart({ bets, type = "stake" }) {
           val = bet.payout || 0;
         }
       }
-      
+
       if (val > 0) {
         map[bettor] = (map[bettor] || 0) + val;
         totalValue += val;
@@ -210,7 +210,7 @@ function BettorShareChart({ bets, type = "stake" }) {
   const radius = 70;
   const strokeWidth = 16;
   const circumference = 2 * Math.PI * radius; // ~439.82
-  
+
   let accumulatedPercentage = 0;
 
   const activeItem = hoveredIdx !== null ? items[hoveredIdx] : null;
@@ -231,7 +231,7 @@ function BettorShareChart({ bets, type = "stake" }) {
       <div style={{ color: "var(--text-secondary)", fontSize: "14px", fontWeight: 600 }}>
         {title}
       </div>
-      
+
       <div
         style={{
           display: "flex",
@@ -254,7 +254,7 @@ function BettorShareChart({ bets, type = "stake" }) {
                 stroke="rgba(255, 255, 255, 0.05)"
                 strokeWidth={strokeWidth}
               />
-              
+
               {items.map((item, idx) => {
                 const strokeLength = (item.percentage / 100) * circumference;
                 const spaceLength = circumference - strokeLength;
@@ -286,7 +286,7 @@ function BettorShareChart({ bets, type = "stake" }) {
                 );
               })}
             </g>
-            
+
             {/* Center Text */}
             <text x="110" y="100" textAnchor="middle" fill="var(--text-secondary)" fontSize="13px" fontWeight="500">
               {activeItem ? activeItem.name : centerLabel}

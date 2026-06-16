@@ -27,7 +27,7 @@ export function enrichBet(rawBet) {
   let houseProfit = null;
 
   if (status === "win") {
-    payout = roundMoney(rawBet.payout ?? stake * price);
+    payout = roundMoney(rawBet.payout ?? (stake * price) / 2);
     houseProfit = roundMoney(rawBet.house_profit ?? stake - payout);
   } else if (status === "lose") {
     payout = roundMoney(rawBet.payout ?? 0);
