@@ -214,5 +214,38 @@ class TranslationService:
             translated_matches.append(translated_match)
         return translated_matches
 
+    def translate_outrights(self, matches):
+        texts = []
+        for match in matches:
+            texts.append(match.get("sport_title"))
+            for bm in match.get("bookmakers", []):
+                for o in bm.get("outcomes", []):
+                    texts.append(o.get("name"))
+        translations = self.translate_many(texts)
+
+        translated_matches = []
+        for match in matches:
+            translated_match = dict(match)
+            sport_title = self._normalize(match.get("sport_title"))
+            if sport_title:
+                translated_match["sport_title"] = translations.get(sport_title, match.get("sport_title"))
+
+            translated_bookmakers = []
+            for bm in match.get("bookmakers", []):
+                translated_bm = dict(bm)
+                translated_outcomes = []
+                for o in bm.get("outcomes", []):
+                    translated_o = dict(o)
+                    name = self._normalize(o.get("name"))
+                    if name:
+                        translated_o["name"] = translations.get(name, o.get("name"))
+                    translated_outcomes.append(translated_o)
+                translated_bm["outcomes"] = translated_outcomes
+                translated_bookmakers.append(translated_bm)
+
+            translated_match["bookmakers"] = translated_bookmakers
+            translated_matches.append(translated_match)
+        return translated_matches
+
 
 translator = TranslationService()

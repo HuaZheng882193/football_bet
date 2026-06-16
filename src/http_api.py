@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from requests import HTTPError
 
 from api_client import OddsAPIClient
-from data_parser import parse_odds_data, parse_scores_data
+from data_parser import parse_odds_data, parse_scores_data, parse_outrights_data
 from score_bet_service import build_exact_score_markets, build_exact_score_result_map
 from translation_service import translator
 
@@ -130,6 +130,28 @@ def get_odds(
         return raw_data
 
     return translator.translate_matches(parse_odds_data(raw_data))
+
+
+@app.get("/outrights")
+def get_outrights(
+    sport: str = Query(..., description="Sport key, e.g. soccer_fifa_world_cup_winner"),
+    regions: str = Query("us,uk,au"),
+    parsed: bool = Query(True, description="Return parsed structure when true"),
+):
+    client = get_client()
+    try:
+        raw_data = client.get_odds(sport=sport, regions=regions, markets="outrights")
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except HTTPError as exc:
+        detail = exc.response.text if exc.response is not None else str(exc)
+        raise HTTPException(status_code=502, detail=detail) from exc
+
+    if not parsed:
+        return raw_data
+
+    return translator.translate_outrights(parse_outrights_data(raw_data))
+
 
 
 @app.get("/score-bets")

@@ -1,0 +1,19 @@
+[
+  {
+    "id": "outright_bet_1781601445087",
+    "bet_type": "outright",
+    "time": "2026-06-16T09:17:25.087Z",
+    "matchId": "94d798388a4dab6d081114ad5e83db38",
+    "fixture": "世界杯冠军",
+    "league": "世界杯冠军",
+    "sport_key": "soccer_fifa_world_cup_winner",
+    "market": "冠军投注",
+    "selection": "法国",
+    "price": 5.25,
+    "bookmaker": "DraftKings",
+    "bettor": "hz",
+    "stake": 10,
+    "estimatedReturn": 26,
+    "status": null
+  }
+]

@@ -75,3 +75,32 @@ def parse_scores_data(raw_data):
         )
 
     return matches
+
+
+def parse_outrights_data(raw_data):
+    matches = []
+    for event in raw_data:
+        match = {
+            "id": event["id"],
+            "sport_key": event.get("sport_key"),
+            "sport_title": event.get("sport_title"),
+            "commence_time": _parse_iso_datetime(event["commence_time"]),
+            "bookmakers": []
+        }
+
+        for bookmaker in event.get("bookmakers", []):
+            bm_entry = {
+                "bookmaker": bookmaker.get("title", "Unknown"),
+                "outcomes": []
+            }
+            for market in bookmaker.get("markets", []):
+                if market["key"] == "outrights":
+                    for o in market["outcomes"]:
+                        bm_entry["outcomes"].append({
+                            "name": o["name"],
+                            "price": o["price"]
+                        })
+            match["bookmakers"].append(bm_entry)
+
+        matches.append(match)
+    return matches
