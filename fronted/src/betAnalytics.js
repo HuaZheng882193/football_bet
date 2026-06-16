@@ -26,8 +26,10 @@ export function enrichBet(rawBet) {
   let payout = null;
   let houseProfit = null;
 
+  const isOutright = rawBet.bet_type === "outright" || rawBet.market === "冠军投注";
   if (status === "win") {
-    payout = roundMoney(rawBet.payout ?? (stake * price) / 2);
+    const defaultPayout = isOutright ? (stake * price) : (stake * price) / 2;
+    payout = roundMoney(rawBet.payout ?? defaultPayout);
     houseProfit = roundMoney(rawBet.house_profit ?? stake - payout);
   } else if (status === "lose") {
     payout = roundMoney(rawBet.payout ?? 0);
@@ -99,12 +101,18 @@ function calculateMaxMatchPayout(matchBets) {
   const standardBets = [];
   const spreadsBets = [];
   const totalsBets = [];
+  const outrightBets = [];
 
   matchBets.forEach((bet) => {
     const market = bet.market || "";
-    const payout = (toNumber(bet.stake, 0) * toNumber(bet.price, 0)) / 2;
+    const isOutright = bet.bet_type === "outright" || market === "冠军投注";
+    const payout = isOutright
+      ? (toNumber(bet.stake, 0) * toNumber(bet.price, 0))
+      : (toNumber(bet.stake, 0) * toNumber(bet.price, 0)) / 2;
 
-    if (market === "精确比分") {
+    if (isOutright) {
+      outrightBets.push({ ...bet, payout });
+    } else if (market === "精确比分") {
       correctScoreBets.push({ ...bet, payout });
     } else if (market === "标准盘") {
       standardBets.push({ ...bet, payout });
@@ -170,7 +178,15 @@ function calculateMaxMatchPayout(matchBets) {
     getSpreadsSum("负") +
     maxTotalsPayout;
 
-  return Math.max(payoutHomeWin, payoutDraw, payoutAwayWin);
+  const maxMatchPayout = Math.max(payoutHomeWin, payoutDraw, payoutAwayWin);
+
+  const outrightSums = {};
+  outrightBets.forEach((b) => {
+    outrightSums[b.selection] = (outrightSums[b.selection] || 0) + b.payout;
+  });
+  const outrightMax = outrightBets.length > 0 ? Math.max(0, ...Object.values(outrightSums)) : 0;
+
+  return maxMatchPayout + outrightMax;
 }
 
 export function buildBookmakerSummary(bets) {

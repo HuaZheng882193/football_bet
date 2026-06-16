@@ -52,7 +52,10 @@ def _apply_bet_settlement(bet: dict, status):
     price = _to_float(bet.get("price"), 0.0)
 
     if status == "win":
-        payout = _round_money(stake * price / 2)
+        if bet.get("bet_type") == "outright" or bet.get("market") == "冠军投注":
+            payout = _round_money(stake * price)
+        else:
+            payout = _round_money(stake * price / 2)
         house_profit = _round_money(stake - payout)
     elif status == "lose":
         payout = 0.0
